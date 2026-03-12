@@ -33,6 +33,10 @@
 - Representa um atendimento marcado na agenda
 - Relaciona cliente, horario, servico, status e responsavel opcional
 - Pode ser associado a um projeto
+- Ja possui modulo CRUD inicial no backend
+- Exige sempre um `Cliente` valido
+- Pode ser filtrado por `status`, `clienteId`, `dataInicio` e `dataFim`
+- Servira de base para calendario operacional e futuros lembretes
 
 ### Notificacao
 
@@ -70,6 +74,9 @@
 - `Tarefa` exige sempre um `Projeto` valido no momento de criar ou atualizar
 - `Tarefa` aceita `Usuario` responsavel apenas de forma opcional
 - `Tarefa` possui endpoint dedicado para troca simples de status
+- `Agendamento` exige `Cliente` valido e aceita `Usuario` e `Projeto` de forma opcional
+- `Agendamento` valida apenas a coerencia basica do intervalo de datas nesta etapa
+- `Agendamento` possui endpoint dedicado para troca simples de status
 
 ## Dados minimos esperados para testes futuros
 

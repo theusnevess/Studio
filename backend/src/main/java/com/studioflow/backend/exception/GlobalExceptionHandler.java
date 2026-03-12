@@ -20,6 +20,21 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     /**
+     * Trata erros de regra de negocio simples.
+     *
+     * @param ex excecao disparada pela aplicacao
+     * @param request requisicao HTTP atual
+     * @return resposta padronizada de erro 400
+     */
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ApiErrorResponse> handleBusinessException(
+        BusinessException ex,
+        HttpServletRequest request
+    ) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), request.getRequestURI());
+    }
+
+    /**
      * Trata cenarios em que o recurso solicitado nao existe.
      *
      * @param ex excecao disparada pela aplicacao
