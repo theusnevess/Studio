@@ -24,6 +24,9 @@
 - Representa uma atividade operacional do studio
 - Possui status, prioridade, prazo e responsavel opcional
 - Sempre pertence a um projeto
+- Ja possui modulo CRUD inicial no backend
+- Pode ser filtrada por `status` e `projetoId`
+- Foi modelada para sustentar o quadro Kanban do StudioFlow
 
 ### Agendamento
 
@@ -64,6 +67,9 @@
 - A migration inicial cobre as seis tabelas centrais do MVP
 - `Cliente` usa inativacao logica em vez de exclusao fisica
 - `Projeto` possui atualizacao simples de status por endpoint dedicado
+- `Tarefa` exige sempre um `Projeto` valido no momento de criar ou atualizar
+- `Tarefa` aceita `Usuario` responsavel apenas de forma opcional
+- `Tarefa` possui endpoint dedicado para troca simples de status
 
 ## Dados minimos esperados para testes futuros
 
