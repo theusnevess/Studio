@@ -38,15 +38,17 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             // O healthcheck precisa continuar publico para facilitar a subida
             // local do projeto e a verificacao rapida da API.
-            // Nesta etapa, Cliente, Projeto, Tarefa e Agendamento tambem ficam publicos para
+            // Nesta etapa, os modulos de dominio ficam publicos para
             // permitir evolucao funcional sem JWT.
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(
                     "/api/health",
+                    "/api/usuarios/**",
                     "/api/clientes/**",
                     "/api/projetos/**",
                     "/api/tarefas/**",
-                    "/api/agendamentos/**"
+                    "/api/agendamentos/**",
+                    "/api/notificacoes/**"
                 ).permitAll()
                 .anyRequest().authenticated()
             )

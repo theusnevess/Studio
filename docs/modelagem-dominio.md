@@ -7,6 +7,8 @@
 - Representa uma pessoa usuaria do sistema
 - Base preparada para autenticacao futura
 - Email unico no banco
+- Ja possui modulo CRUD minimo no backend
+- Pode ser inativado logicamente
 
 ### Cliente
 
@@ -43,6 +45,9 @@
 - Representa um lembrete ou aviso interno do sistema
 - Sempre pertence a um usuario
 - Pode estar vinculada a um agendamento
+- Ja possui modulo CRUD inicial no backend
+- Pode ser filtrada por `usuarioId` e `visualizada`
+- Servira de base para lembretes internos e futura evolucao de alertas
 
 ## Relacionamentos
 
@@ -77,6 +82,9 @@
 - `Agendamento` exige `Cliente` valido e aceita `Usuario` e `Projeto` de forma opcional
 - `Agendamento` valida apenas a coerencia basica do intervalo de datas nesta etapa
 - `Agendamento` possui endpoint dedicado para troca simples de status
+- `Usuario` existe para sustentar o dominio e preparar autenticacao futura, sem login real nesta fase
+- `Notificacao` exige `Usuario` valido e aceita `Agendamento` opcional
+- `Notificacao` possui endpoint dedicado para marcacao de visualizacao
 
 ## Dados minimos esperados para testes futuros
 
