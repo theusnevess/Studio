@@ -11,6 +11,7 @@ O projeto adota um monorepo simples com separacao entre backend, frontend e docu
 - Persistir dados no PostgreSQL
 - Preparar a base de seguranca e autenticacao
 - Controlar migracoes de banco com Flyway
+- Manter a modelagem central do dominio do StudioFlow
 
 ## Responsabilidades do frontend
 
@@ -26,3 +27,7 @@ O PostgreSQL foi escolhido por ser um banco relacional robusto, amplamente utili
 ## Decisao de uso de JWT no futuro
 
 Nesta etapa inicial, a autenticacao completa ainda nao sera implementada. A decisao arquitetural e preparar o backend para adotar JWT em etapas futuras, mantendo a seguranca simples agora e evitando antecipar complexidade desnecessaria.
+
+## Decisao de modelagem inicial
+
+O backend passa a ter uma base de dominio composta por usuarios, clientes, projetos, tarefas, agendamentos e notificacoes. Essa escolha cobre o MVP funcional e sustenta os requisitos academicos de organizacao de atividades, Kanban e calendario sem introduzir entidades fora do escopo.
