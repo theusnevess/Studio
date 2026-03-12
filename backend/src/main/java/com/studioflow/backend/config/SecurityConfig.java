@@ -38,8 +38,10 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             // O healthcheck precisa continuar publico para facilitar a subida
             // local do projeto e a verificacao rapida da API.
+            // Nesta etapa, Cliente e Projeto tambem ficam publicos para
+            // permitir evolucao funcional sem JWT.
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/api/health").permitAll()
+                .requestMatchers("/api/health", "/api/clientes/**", "/api/projetos/**").permitAll()
                 .anyRequest().authenticated()
             )
             // O HTTP Basic serve apenas como suporte tecnico minimo enquanto

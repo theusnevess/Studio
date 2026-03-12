@@ -10,6 +10,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     /**
+     * Lista todas as clientes ordenadas por nome.
+     *
+     * @return lista ordenada de clientes
+     */
+    List<Cliente> findAllByOrderByNomeAsc();
+
+    /**
      * Lista clientes ativos ordenados por nome.
      *
      * @param ativo indicador de situacao da cliente

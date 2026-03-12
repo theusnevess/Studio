@@ -62,6 +62,8 @@
 - `Notificacao` manteve apenas `createdAt`, alinhada ao escopo atual
 - O Hibernate nao cria schema automaticamente; a estrutura vem do Flyway
 - A migration inicial cobre as seis tabelas centrais do MVP
+- `Cliente` usa inativacao logica em vez de exclusao fisica
+- `Projeto` possui atualizacao simples de status por endpoint dedicado
 
 ## Dados minimos esperados para testes futuros
 

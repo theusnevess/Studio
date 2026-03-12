@@ -11,6 +11,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ProjetoRepository extends JpaRepository<Projeto, Long> {
 
     /**
+     * Lista todos os projetos ordenados por nome.
+     *
+     * @return lista ordenada de projetos
+     */
+    List<Projeto> findAllByOrderByNomeAsc();
+
+    /**
      * Lista projetos por status ordenados por nome.
      *
      * @param status status atual da frente operacional
