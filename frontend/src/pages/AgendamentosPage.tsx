@@ -7,7 +7,8 @@ export function AgendamentosPage() {
   return (
     <PagePlaceholder
       title="Agendamentos"
-      description="Pagina base para a futura gestao de atendimentos, horarios e observacoes."
+      description="Tela base para atendimentos, horarios, servicos e organizacao da agenda do studio."
+      hint="A estrutura foi desenhada para futuramente alimentar calendario, dashboard e notificacoes."
     />
   )
 }

@@ -1,6 +1,12 @@
+import { AppCard } from '../components/AppCard'
+import { EmptyState } from '../components/EmptyState'
+import { PageHeader } from '../components/PageHeader'
+
 type PagePlaceholderProps = {
   title: string
   description: string
+  eyebrow?: string
+  hint?: string
 }
 
 /**
@@ -9,16 +15,27 @@ type PagePlaceholderProps = {
  * Ele evita repeticao nas paginas iniciais e deixa claro que a rota ja existe,
  * mas a funcionalidade sera detalhada em etapas futuras.
  */
-export function PagePlaceholder({ title, description }: PagePlaceholderProps) {
+export function PagePlaceholder({
+  title,
+  description,
+  eyebrow = 'Modulo em construcao',
+  hint = 'A fundacao visual e estrutural ja esta pronta para receber integracao real com a API.',
+}: PagePlaceholderProps) {
   return (
-    <section className="rounded-[24px] border border-dashed border-stone-300 bg-stone-50/80 p-8">
-      <span className="inline-flex rounded-full bg-moss/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-moss">
-        Estrutura inicial
-      </span>
-      <h2 className="mt-4 text-3xl font-semibold text-ink">{title}</h2>
-      <p className="mt-3 max-w-2xl text-base leading-7 text-stone-600">
-        {description}
-      </p>
+    <section className="space-y-6">
+      <PageHeader
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+      />
+
+      <AppCard>
+        <EmptyState
+          title={`${title} pronto para evoluir`}
+          description={hint}
+          actionLabel="Integracao em breve"
+        />
+      </AppCard>
     </section>
   )
 }

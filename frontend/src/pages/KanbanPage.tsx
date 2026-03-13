@@ -7,7 +7,8 @@ export function KanbanPage() {
   return (
     <PagePlaceholder
       title="Kanban"
-      description="Estrutura inicial da visualizacao em colunas para acompanhamento do fluxo de tarefas."
+      description="Estrutura inicial do quadro visual para acompanhar o fluxo das tarefas do studio."
+      hint="O backend ja entrega status e prioridade. A interface agora esta pronta para receber a primeira coluna funcional."
     />
   )
 }

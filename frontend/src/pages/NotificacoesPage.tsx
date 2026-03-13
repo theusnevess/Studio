@@ -7,7 +7,8 @@ export function NotificacoesPage() {
   return (
     <PagePlaceholder
       title="Notificacoes"
-      description="Pagina reservada para os lembretes internos e a futura base de alertas no navegador."
+      description="Area preparada para lembretes internos, avisos operacionais e futura base de alertas no navegador."
+      hint="A experiencia visual foi alinhada ao dashboard para sustentar uma area de notificacoes mais clara e objetiva."
     />
   )
 }

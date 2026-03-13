@@ -7,6 +7,7 @@ import { DashboardPage } from '../pages/DashboardPage'
 import { KanbanPage } from '../pages/KanbanPage'
 import { LoginPage } from '../pages/LoginPage'
 import { NotificacoesPage } from '../pages/NotificacoesPage'
+import { ProjetosPage } from '../pages/ProjetosPage'
 import { TarefasPage } from '../pages/TarefasPage'
 
 /**
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: 'clientes',
         element: <ClientesPage />,
+      },
+      {
+        path: 'projetos',
+        element: <ProjetosPage />,
       },
       {
         path: 'agendamentos',

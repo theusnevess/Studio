@@ -7,7 +7,8 @@ export function TarefasPage() {
   return (
     <PagePlaceholder
       title="Tarefas"
-      description="Espaco preparado para as tarefas operacionais do studio, com foco em execucao e acompanhamento."
+      description="Espaco preparado para tarefas operacionais, prioridades, responsaveis e acompanhamento continuo."
+      hint="A resposta das tarefas ja foi pensada para se conectar com o Kanban sem retrabalho visual."
     />
   )
 }

@@ -4,4 +4,6 @@
 export type AppRouteLink = {
   label: string
   to: string
+  shortLabel: string
+  description: string
 }

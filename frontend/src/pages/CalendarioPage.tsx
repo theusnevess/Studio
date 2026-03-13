@@ -7,7 +7,8 @@ export function CalendarioPage() {
   return (
     <PagePlaceholder
       title="Calendario"
-      description="Base de navegacao para a agenda operacional do studio, que reunira agendamentos e prazos."
+      description="Base da agenda visual do studio, preparada para consolidar atendimentos e prazos em um unico calendario."
+      hint="Nesta fase, a prioridade foi estabilizar o layout e a navegacao antes de adicionar a biblioteca de calendario."
     />
   )
 }
