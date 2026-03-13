@@ -18,6 +18,16 @@ export function formatDate(value: string) {
 }
 
 /**
+ * Formatador simples apenas de hora.
+ */
+export function formatTime(value: string) {
+  return new Intl.DateTimeFormat('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(new Date(value))
+}
+
+/**
  * Converte um valor ISO para o formato aceito por inputs datetime-local.
  */
 export function toDateTimeLocalValue(value?: string) {
