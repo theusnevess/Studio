@@ -59,10 +59,14 @@ export type Notificacao = {
   id: number
   titulo: string
   mensagem: string
-  tipo: string
+  tipo: TipoNotificacao
   visualizada: boolean
   dataHoraEnvio: string
   usuarioId: number
+  usuarioNome?: string
+  agendamentoId?: number
+  agendamentoTitulo?: string
+  createdAt?: string
 }
 
 export type Usuario = {
@@ -71,6 +75,11 @@ export type Usuario = {
   email: string
   ativo: boolean
 }
+
+export type TipoNotificacao =
+  | 'LEMBRETE_AGENDAMENTO'
+  | 'AVISO_TAREFA'
+  | 'INFORMACAO_GERAL'
 
 export type ClienteRequest = {
   nome: string

@@ -9,6 +9,8 @@ const badgeMap: Record<string, string> = {
   CANCELADO: 'border-rose-200 bg-rose-50 text-rose-700',
   ATIVO: 'border-emerald-200 bg-emerald-50 text-emerald-700',
   INATIVO: 'border-stone-200 bg-stone-100 text-stone-600',
+  VISUALIZADA: 'border-emerald-200 bg-emerald-50 text-emerald-700',
+  NAO_VISUALIZADA: 'border-brand-border bg-white text-brand-graphite',
   A_FAZER: 'border-brand-border bg-white text-brand-graphite',
   EM_ANDAMENTO: 'border-amber-200 bg-amber-50 text-amber-700',
   ALTA: 'border-rose-200 bg-rose-50 text-rose-700',
@@ -16,6 +18,9 @@ const badgeMap: Record<string, string> = {
   BAIXA: 'border-sky-200 bg-sky-50 text-sky-700',
   PLANEJADO: 'border-brand-border bg-white text-brand-graphite',
   ARQUIVADO: 'border-stone-200 bg-stone-100 text-stone-600',
+  LEMBRETE_AGENDAMENTO: 'border-amber-200 bg-amber-50 text-amber-700',
+  AVISO_TAREFA: 'border-brand-border bg-brand-mist text-brand-berry',
+  INFORMACAO_GERAL: 'border-sky-200 bg-sky-50 text-sky-700',
 }
 
 function humanizeStatus(value: string) {

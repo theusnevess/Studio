@@ -1,79 +1,16 @@
+import { useEffect, useState } from 'react'
 import { AppCard } from '../components/AppCard'
 import { EmptyState } from '../components/EmptyState'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 import { PageHeader } from '../components/PageHeader'
 import { StatusBadge } from '../components/StatusBadge'
+import { agendamentoService } from '../services/agendamentoService'
+import { notificacaoService } from '../services/notificacaoService'
+import { tarefaService } from '../services/tarefaService'
+import type { Agendamento, Notificacao, Tarefa } from '../types/domain'
+import { getErrorMessage } from '../utils/errors'
 import { formatDateTime } from '../utils/formatters'
-
-const summaryCards = [
-  {
-    title: 'Atendimentos de hoje',
-    value: '08',
-    detail: '3 confirmados e 1 em observacao',
-  },
-  {
-    title: 'Tarefas pendentes',
-    value: '12',
-    detail: '4 com prioridade alta',
-  },
-  {
-    title: 'Clientes ativos',
-    value: '74',
-    detail: 'Base pronta para relacionamento recorrente',
-  },
-  {
-    title: 'Lembretes do dia',
-    value: '05',
-    detail: 'Notificacoes internas para a operacao',
-  },
-]
-
-const appointments = [
-  {
-    id: 1,
-    title: 'Manutencao de alongamento',
-    client: 'Ana Beatriz',
-    startsAt: '2026-03-13T09:00:00',
-    status: 'CONFIRMADO',
-  },
-  {
-    id: 2,
-    title: 'Banho de gel',
-    client: 'Camila Nunes',
-    startsAt: '2026-03-13T13:30:00',
-    status: 'AGENDADO',
-  },
-  {
-    id: 3,
-    title: 'Pe decorado',
-    client: 'Lorena Souza',
-    startsAt: '2026-03-13T16:00:00',
-    status: 'AGENDADO',
-  },
-]
-
-const tasks = [
-  {
-    id: 1,
-    title: 'Separar materiais para o sabado',
-    project: 'Rotina semanal',
-    status: 'A_FAZER',
-    priority: 'ALTA',
-  },
-  {
-    id: 2,
-    title: 'Atualizar agenda da proxima semana',
-    project: 'Agenda do mes',
-    status: 'EM_ANDAMENTO',
-    priority: 'MEDIA',
-  },
-  {
-    id: 3,
-    title: 'Conferir mensagens de confirmacao',
-    project: 'Atendimento diario',
-    status: 'A_FAZER',
-    priority: 'ALTA',
-  },
-]
 
 const quickActions = [
   'Cadastrar nova cliente',
@@ -89,6 +26,61 @@ const quickActions = [
  * studio, com cards de resumo e secoes preparadas para integracao futura.
  */
 export function DashboardPage() {
+  const [appointments, setAppointments] = useState<Agendamento[]>([])
+  const [tasks, setTasks] = useState<Tarefa[]>([])
+  const [notifications, setNotifications] = useState<Notificacao[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const loadDashboard = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+
+        const [appointmentsResponse, tasksResponse, notificationsResponse] =
+          await Promise.all([
+            agendamentoService.list(),
+            tarefaService.list(),
+            notificacaoService.list({ visualizada: false }),
+          ])
+
+        setAppointments(appointmentsResponse.slice(0, 3))
+        setTasks(tasksResponse.filter((task) => task.status !== 'CONCLUIDO').slice(0, 3))
+        setNotifications(notificationsResponse.slice(0, 4))
+      } catch (loadError) {
+        setError(getErrorMessage(loadError))
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    void loadDashboard()
+  }, [])
+
+  const summaryCards = [
+    {
+      title: 'Atendimentos carregados',
+      value: String(appointments.length).padStart(2, '0'),
+      detail: 'Baseado nos proximos itens carregados do backend',
+    },
+    {
+      title: 'Tarefas abertas',
+      value: String(tasks.length).padStart(2, '0'),
+      detail: 'Pendencias operacionais exibidas no painel',
+    },
+    {
+      title: 'Lembretes pendentes',
+      value: String(notifications.length).padStart(2, '0'),
+      detail: 'Notificacoes nao visualizadas do sistema',
+    },
+    {
+      title: 'Base pronta',
+      value: 'API',
+      detail: 'Frontend consumindo dados reais dos modulos centrais',
+    },
+  ]
+
   return (
     <section className="space-y-8">
       <PageHeader
@@ -112,6 +104,17 @@ export function DashboardPage() {
           </AppCard>
         ))}
       </div>
+
+      {loading ? <LoadingState label="Carregando resumo real do studio..." /> : null}
+
+      {!loading && error ? (
+        <ErrorState
+          title="Falha ao carregar o painel"
+          description={error}
+          actionLabel="Atualizar painel"
+          onRetry={() => window.location.reload()}
+        />
+      ) : null}
 
       <div className="grid gap-6 xl:grid-cols-[1.4fr_1fr]">
         <AppCard>
@@ -138,19 +141,26 @@ export function DashboardPage() {
                 <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                   <div>
                     <p className="text-lg font-semibold text-brand-ink">
-                      {appointment.title}
+                      {appointment.titulo}
                     </p>
                     <p className="mt-1 text-sm text-brand-graphite/[0.76]">
-                      {appointment.client}
+                      {appointment.clienteNome || 'Cliente nao identificado'}
                     </p>
                     <p className="mt-3 text-sm text-brand-graphite/[0.72]">
-                      {formatDateTime(appointment.startsAt)}
+                      {formatDateTime(appointment.dataHoraInicio)}
                     </p>
                   </div>
                   <StatusBadge value={appointment.status} />
                 </div>
               </div>
             ))}
+            {!loading && appointments.length === 0 ? (
+              <EmptyState
+                title="Sem atendimentos no painel"
+                description="Quando houver agendamentos no backend, os proximos horarios aparecerao aqui."
+                actionLabel="Agenda vazia"
+              />
+            ) : null}
           </div>
         </AppCard>
 
@@ -201,28 +211,62 @@ export function DashboardPage() {
                 <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                   <div>
                     <p className="text-lg font-semibold text-brand-ink">
-                      {task.title}
+                      {task.titulo}
                     </p>
                     <p className="mt-2 text-sm text-brand-graphite/[0.76]">
-                      Projeto: {task.project}
+                      Projeto: {task.projetoNome || `Projeto #${task.projetoId}`}
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <StatusBadge value={task.priority} />
+                    <StatusBadge value={task.prioridade} />
                     <StatusBadge value={task.status} />
                   </div>
                 </div>
               </div>
             ))}
+            {!loading && tasks.length === 0 ? (
+              <EmptyState
+                title="Sem tarefas em aberto"
+                description="As tarefas operacionais em aberto aparecerao aqui para orientar a rotina do studio."
+                actionLabel="Fluxo em dia"
+              />
+            ) : null}
           </div>
         </AppCard>
 
         <AppCard className="bg-[linear-gradient(180deg,rgba(255,241,244,0.96),rgba(255,249,247,0.96))]">
-          <EmptyState
-            title="Frontend pronto para integracao real"
-            description="A base visual, as rotas e a infraestrutura de consumo da API ja estao estruturadas. Os proximos passos podem conectar listagens, formularios e estados reais do backend."
-            actionLabel="Base preparada"
-          />
+          <h2 className="font-serif text-2xl font-semibold text-brand-ink">
+            Lembretes internos
+          </h2>
+          <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.74]">
+            Notificacoes nao visualizadas para acompanhar o que pede atencao no sistema.
+          </p>
+
+          <div className="mt-6 space-y-3">
+            {notifications.map((notification) => (
+              <div
+                key={notification.id}
+                className="rounded-[22px] border border-brand-border bg-white/82 p-4"
+              >
+                <div className="flex flex-wrap items-center gap-2">
+                  <p className="text-sm font-semibold text-brand-ink">
+                    {notification.titulo}
+                  </p>
+                  <StatusBadge value={notification.tipo} />
+                </div>
+                <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.78]">
+                  {notification.mensagem}
+                </p>
+              </div>
+            ))}
+            {!loading && notifications.length === 0 ? (
+              <EmptyState
+                title="Sem lembretes pendentes"
+                description="As notificacoes internas nao visualizadas serao exibidas aqui quando existirem."
+                actionLabel="Caixa limpa"
+              />
+            ) : null}
+          </div>
         </AppCard>
       </div>
     </section>
