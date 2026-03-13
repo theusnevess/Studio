@@ -16,3 +16,24 @@ export function formatDate(value: string) {
     dateStyle: 'short',
   }).format(new Date(value))
 }
+
+/**
+ * Converte um valor ISO para o formato aceito por inputs datetime-local.
+ */
+export function toDateTimeLocalValue(value?: string) {
+  if (!value) {
+    return ''
+  }
+
+  const date = new Date(value)
+  const pad = (part: number) => String(part).padStart(2, '0')
+
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`
+}
+
+/**
+ * Converte um valor do input datetime-local para ISO local sem segundos.
+ */
+export function toApiDateTime(value?: string) {
+  return value || undefined
+}

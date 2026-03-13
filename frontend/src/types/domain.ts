@@ -26,20 +26,23 @@ export type Tarefa = {
   id: number
   titulo: string
   descricao?: string
-  status: string
-  prioridade: string
+  status: StatusTarefa
+  prioridade: PrioridadeTarefa
   projetoId: number
   projetoNome?: string
   responsavelId?: number
   responsavelNome?: string
   dataVencimento?: string
+  createdAt?: string
+  updatedAt?: string
 }
 
 export type Agendamento = {
   id: number
   titulo: string
   servico: string
-  status: string
+  observacoes?: string
+  status: StatusAgendamento
   clienteId: number
   clienteNome?: string
   responsavelId?: number
@@ -48,6 +51,8 @@ export type Agendamento = {
   projetoNome?: string
   dataHoraInicio: string
   dataHoraFim: string
+  createdAt?: string
+  updatedAt?: string
 }
 
 export type Notificacao = {
@@ -83,4 +88,36 @@ export type ProjetoRequest = {
   nome: string
   descricao?: string
   status: StatusProjeto
+}
+
+export type StatusTarefa = 'A_FAZER' | 'EM_ANDAMENTO' | 'CONCLUIDO'
+
+export type PrioridadeTarefa = 'BAIXA' | 'MEDIA' | 'ALTA'
+
+export type TarefaRequest = {
+  titulo: string
+  descricao?: string
+  status: StatusTarefa
+  prioridade: PrioridadeTarefa
+  dataVencimento?: string
+  projetoId: number
+  responsavelId?: number
+}
+
+export type StatusAgendamento =
+  | 'AGENDADO'
+  | 'CONFIRMADO'
+  | 'CONCLUIDO'
+  | 'CANCELADO'
+
+export type AgendamentoRequest = {
+  titulo: string
+  servico: string
+  observacoes?: string
+  dataHoraInicio: string
+  dataHoraFim: string
+  status: StatusAgendamento
+  clienteId: number
+  responsavelId?: number
+  projetoId?: number
 }
