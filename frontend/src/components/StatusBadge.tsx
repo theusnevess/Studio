@@ -7,12 +7,15 @@ const badgeMap: Record<string, string> = {
   CONFIRMADO: 'border-emerald-200 bg-emerald-50 text-emerald-700',
   CONCLUIDO: 'border-emerald-200 bg-emerald-50 text-emerald-700',
   CANCELADO: 'border-rose-200 bg-rose-50 text-rose-700',
+  ATIVO: 'border-emerald-200 bg-emerald-50 text-emerald-700',
+  INATIVO: 'border-stone-200 bg-stone-100 text-stone-600',
   A_FAZER: 'border-brand-border bg-white text-brand-graphite',
   EM_ANDAMENTO: 'border-amber-200 bg-amber-50 text-amber-700',
   ALTA: 'border-rose-200 bg-rose-50 text-rose-700',
   MEDIA: 'border-amber-200 bg-amber-50 text-amber-700',
   BAIXA: 'border-sky-200 bg-sky-50 text-sky-700',
   PLANEJADO: 'border-brand-border bg-white text-brand-graphite',
+  ARQUIVADO: 'border-stone-200 bg-stone-100 text-stone-600',
 }
 
 function humanizeStatus(value: string) {

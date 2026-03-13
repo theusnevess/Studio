@@ -9,6 +9,8 @@ export type Cliente = {
   telefone?: string
   observacoes?: string
   ativo: boolean
+  createdAt?: string
+  updatedAt?: string
 }
 
 export type Projeto = {
@@ -16,6 +18,8 @@ export type Projeto = {
   nome: string
   descricao?: string
   status: string
+  createdAt?: string
+  updatedAt?: string
 }
 
 export type Tarefa = {
@@ -61,4 +65,22 @@ export type Usuario = {
   nome: string
   email: string
   ativo: boolean
+}
+
+export type ClienteRequest = {
+  nome: string
+  telefone?: string
+  observacoes?: string
+}
+
+export type StatusProjeto =
+  | 'PLANEJADO'
+  | 'EM_ANDAMENTO'
+  | 'CONCLUIDO'
+  | 'ARQUIVADO'
+
+export type ProjetoRequest = {
+  nome: string
+  descricao?: string
+  status: StatusProjeto
 }
