@@ -2,7 +2,7 @@ spring:
   application:
     name: studioflow-backend
   profiles:
-    active: dev
+    active: demo
 
 server:
   port: 8080
