@@ -164,7 +164,7 @@ export function ProjetosPage() {
       <PageHeader
         eyebrow="Frentes operacionais"
         title="Projetos"
-        description="Modulo conectado ao backend para organizar rotina semanal, agenda do mes e outras frentes que sustentam a apresentacao academica do sistema."
+        description="Modulo conectado ao backend para organizar frentes que sustentam a operacao do studio."
         action={`${projetos.length} projeto(s) visiveis`}
       />
 
@@ -172,25 +172,25 @@ export function ProjetosPage() {
         <FeedbackBanner tone={feedback.tone} message={feedback.message} />
       ) : null}
 
-      <div className="grid gap-6 xl:grid-cols-[1.45fr_0.95fr]">
-        <AppCard className="space-y-6">
+      <div className="grid gap-5 xl:grid-cols-[1.45fr_0.95fr]">
+        <AppCard className="space-y-5">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h3 className="font-serif text-2xl font-semibold text-brand-ink">
+              <h3 className="text-xl font-semibold text-brand-ink">
                 Frentes do studio
               </h3>
-              <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.78]">
-                Crie, acompanhe e ajuste o status dos projetos que organizam a operacao.
+              <p className="mt-1 text-sm leading-6 text-brand-graphite">
+                Crie, acompanhe e ajuste o status dos projetos.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <select
                 value={statusFilter}
                 onChange={(event) =>
                   setStatusFilter(event.target.value as 'TODOS' | StatusProjeto)
                 }
-                className="rounded-[18px] border border-brand-border bg-brand-cream px-4 py-3 text-sm text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-select"
               >
                 <option value="TODOS">Todos os status</option>
                 {statusOptions.map((status) => (
@@ -203,7 +203,7 @@ export function ProjetosPage() {
               <button
                 type="button"
                 onClick={startCreate}
-                className="rounded-[20px] bg-gradient-to-r from-brand-rose to-brand-berry px-5 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-white shadow-soft transition hover:opacity-95"
+                className="sf-button-primary whitespace-nowrap"
               >
                 Novo projeto
               </button>
@@ -224,35 +224,35 @@ export function ProjetosPage() {
           {!loading && !error && projetos.length === 0 ? (
             <EmptyState
               title="Nenhum projeto encontrado"
-              description="Ainda nao ha projetos para o filtro selecionado. Crie a primeira frente operacional do studio."
+              description="Ainda nao ha projetos para o filtro selecionado."
               actionLabel="Criar projeto"
             />
           ) : null}
 
           {!loading && !error && projetos.length > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {projetos.map((projeto) => (
                 <article
                   key={projeto.id}
-                  className="rounded-[26px] border border-brand-border bg-white/85 p-5"
+                  className="rounded-xl border border-brand-border bg-brand-mist/40 p-4"
                 >
-                  <div className="flex flex-col gap-5">
-                    <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                       <div>
-                        <div className="flex flex-wrap items-center gap-3">
-                          <h4 className="text-lg font-semibold text-brand-ink">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h4 className="text-base font-medium text-brand-ink">
                             {projeto.nome}
                           </h4>
                           <StatusBadge value={projeto.status} />
                         </div>
-                        <div className="mt-3 space-y-2 text-sm leading-6 text-brand-graphite/[0.8]">
+                        <div className="mt-2 space-y-1 text-sm leading-6 text-brand-graphite">
                           <p>
-                            <strong>Descricao:</strong>{' '}
-                            {projeto.descricao || 'Sem descricao cadastrada.'}
+                            <strong className="text-brand-ink/60">Descricao:</strong>{' '}
+                            {projeto.descricao || 'Sem descricao.'}
                           </p>
                           {projeto.updatedAt ? (
                             <p>
-                              <strong>Atualizado em:</strong>{' '}
+                              <strong className="text-brand-ink/60">Atualizado em:</strong>{' '}
                               {formatDate(projeto.updatedAt)}
                             </p>
                           ) : null}
@@ -262,13 +262,13 @@ export function ProjetosPage() {
                       <button
                         type="button"
                         onClick={() => startEdit(projeto)}
-                        className="rounded-full border border-brand-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-graphite transition hover:border-brand-rose/40 hover:bg-brand-mist"
+                        className="sf-button-secondary"
                       >
                         Editar
                       </button>
                     </div>
 
-                    <div className="flex flex-col gap-3 rounded-[22px] bg-brand-cream p-4 sm:flex-row sm:items-center">
+                    <div className="flex flex-col gap-2 rounded-xl bg-brand-surface-raise/60 p-3 sm:flex-row sm:items-center">
                       <select
                         value={statusDrafts[projeto.id] ?? projeto.status}
                         onChange={(event) =>
@@ -277,7 +277,7 @@ export function ProjetosPage() {
                             [projeto.id]: event.target.value as StatusProjeto,
                           }))
                         }
-                        className="flex-1 rounded-[18px] border border-brand-border bg-white px-4 py-3 text-sm text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                        className="sf-select flex-1"
                       >
                         {statusOptions.map((status) => (
                           <option key={status.value} value={status.value}>
@@ -289,7 +289,7 @@ export function ProjetosPage() {
                       <button
                         type="button"
                         onClick={() => void handleStatusUpdate(projeto.id)}
-                        className="rounded-[18px] border border-brand-border bg-white px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-brand-graphite transition hover:border-brand-rose/40 hover:bg-brand-mist"
+                        className="sf-button-secondary"
                       >
                         Atualizar status
                       </button>
@@ -301,30 +301,30 @@ export function ProjetosPage() {
           ) : null}
         </AppCard>
 
-        <AppCard className="h-fit space-y-6 xl:sticky xl:top-8">
+        <AppCard className="h-fit space-y-5 xl:sticky xl:top-8">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <h3 className="font-serif text-2xl font-semibold text-brand-ink">
+              <h3 className="text-xl font-semibold text-brand-ink">
                 {editingProjeto ? 'Editar projeto' : 'Novo projeto'}
               </h3>
-              <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.78]">
-                Configure nome, descricao e status da frente operacional.
+              <p className="mt-1 text-sm leading-6 text-brand-graphite">
+                Configure nome, descricao e status.
               </p>
             </div>
             {editingProjeto ? (
               <button
                 type="button"
                 onClick={resetForm}
-                className="rounded-full border border-brand-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-graphite transition hover:bg-brand-mist"
+                className="sf-button-secondary"
               >
                 Cancelar
               </button>
             ) : null}
           </div>
 
-          <form className="space-y-5" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">
                 Nome
               </span>
               <input
@@ -337,12 +337,12 @@ export function ProjetosPage() {
                   }))
                 }
                 placeholder="Ex.: Rotina semanal"
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-ink outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-input"
               />
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">
                 Descricao
               </span>
               <textarea
@@ -354,13 +354,13 @@ export function ProjetosPage() {
                     descricao: event.target.value,
                   }))
                 }
-                placeholder="Explique o foco operacional deste projeto."
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-ink outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                placeholder="Explique o foco deste projeto."
+                className="sf-textarea"
               />
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">
                 Status
               </span>
               <select
@@ -371,7 +371,7 @@ export function ProjetosPage() {
                     status: event.target.value as StatusProjeto,
                   }))
                 }
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-select"
               >
                 {statusOptions.map((status) => (
                   <option key={status.value} value={status.value}>
@@ -384,7 +384,7 @@ export function ProjetosPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full rounded-[22px] bg-gradient-to-r from-brand-rose to-brand-berry px-5 py-3.5 text-sm font-semibold uppercase tracking-[0.18em] text-white shadow-soft transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+              className="sf-button-primary w-full"
             >
               {submitting
                 ? 'Salvando...'

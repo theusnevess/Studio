@@ -72,7 +72,7 @@ export function CalendarioPage() {
       <PageHeader
         eyebrow="Agenda visual"
         title="Calendario"
-        description="Visao mensal funcional dos agendamentos reais do StudioFlow, com leitura clara por dia e detalhes rapidos de cada atendimento."
+        description="Visao mensal dos agendamentos reais do StudioFlow, com leitura clara por dia e detalhes rapidos."
         action={`${monthlyEvents.length} evento(s) neste mes`}
       />
 
@@ -91,51 +91,51 @@ export function CalendarioPage() {
         <AppCard>
           <EmptyState
             title="Nenhum agendamento cadastrado"
-            description="Cadastre atendimentos no modulo de agendamentos para visualizar a agenda do studio em formato de calendario."
+            description="Cadastre atendimentos no modulo de agendamentos para visualizar a agenda."
             actionLabel="Agenda aguardando dados"
           />
         </AppCard>
       ) : null}
 
       {!loading && !error && agendamentos.length > 0 ? (
-        <div className="grid gap-6 xl:grid-cols-[1.4fr_0.95fr]">
-          <AppCard className="space-y-6">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="grid gap-5 xl:grid-cols-[1.4fr_0.95fr]">
+          <AppCard className="space-y-5">
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div>
-                <h3 className="font-serif text-2xl font-semibold text-brand-ink">
+                <h3 className="text-xl font-semibold capitalize text-brand-ink">
                   {referenceDate.toLocaleDateString('pt-BR', {
                     month: 'long',
                     year: 'numeric',
                   })}
                 </h3>
-                <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.78]">
-                  Selecione um atendimento no calendario para ver os detalhes do dia.
+                <p className="mt-1 text-sm leading-6 text-brand-graphite">
+                  Selecione um atendimento para ver detalhes.
                 </p>
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex gap-2">
                 <button
                   type="button"
                   onClick={() => setReferenceDate((current) => addMonths(current, -1))}
-                  className="rounded-full border border-brand-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-brand-graphite transition hover:border-brand-rose/40 hover:bg-brand-mist"
+                  className="sf-button-secondary"
                 >
-                  Mes anterior
+                  ← Anterior
                 </button>
                 <button
                   type="button"
                   onClick={() => setReferenceDate((current) => addMonths(current, 1))}
-                  className="rounded-full border border-brand-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-brand-graphite transition hover:border-brand-rose/40 hover:bg-brand-mist"
+                  className="sf-button-secondary"
                 >
-                  Proximo mes
+                  Proximo →
                 </button>
               </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-3">
+            <div className="grid grid-cols-7 gap-2">
               {weekdayLabels.map((label) => (
                 <div
                   key={label}
-                  className="rounded-[18px] bg-brand-mist px-3 py-3 text-center text-xs font-semibold uppercase tracking-[0.18em] text-brand-berry"
+                  className="rounded-lg bg-brand-mist/60 px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-rose/70"
                 >
                   {label}
                 </div>
@@ -150,44 +150,47 @@ export function CalendarioPage() {
                   <div
                     key={day.date.toISOString()}
                     className={[
-                      'min-h-[148px] rounded-[22px] border p-3 transition',
+                      'min-h-[120px] rounded-xl border p-2 transition',
                       day.inCurrentMonth
-                        ? 'border-brand-border bg-white/90'
-                        : 'border-brand-border/60 bg-brand-cream/60 text-brand-graphite/50',
-                      isToday(day.date) ? 'ring-2 ring-brand-rose/25' : '',
+                        ? 'border-brand-border bg-brand-mist/30'
+                        : 'border-transparent bg-brand-mist/10 text-brand-graphite/40',
+                      isToday(day.date) ? 'ring-1 ring-brand-rose/30' : '',
                     ].join(' ')}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-semibold">
+                      <span className={[
+                        'text-xs font-medium',
+                        isToday(day.date) ? 'text-brand-rose' : '',
+                      ].join(' ')}>
                         {day.date.getDate()}
                       </span>
                       {dayEvents.length > 0 ? (
-                        <span className="rounded-full bg-brand-mist px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-berry">
+                        <span className="rounded-md bg-brand-rose/10 px-1.5 py-0.5 text-[9px] font-semibold text-brand-rose/80">
                           {dayEvents.length}
                         </span>
                       ) : null}
                     </div>
 
-                    <div className="mt-3 space-y-2">
-                      {dayEvents.slice(0, 3).map((event) => (
+                    <div className="mt-2 space-y-1">
+                      {dayEvents.slice(0, 2).map((event) => (
                         <button
                           key={event.id}
                           type="button"
                           onClick={() => setSelectedAgendamento(event)}
-                          className="block w-full rounded-[16px] border border-brand-border bg-brand-cream px-3 py-2 text-left transition hover:border-brand-rose/40 hover:bg-brand-mist"
+                          className="block w-full rounded-lg border border-brand-border bg-brand-surface-raise/60 px-2 py-1.5 text-left transition hover:border-brand-rose/20 hover:bg-brand-surface-raise"
                         >
-                          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-berry">
+                          <p className="text-[9px] font-semibold uppercase tracking-wider text-brand-rose/70">
                             {formatTime(event.dataHoraInicio)}
                           </p>
-                          <p className="mt-1 line-clamp-2 text-sm font-medium text-brand-ink">
+                          <p className="mt-0.5 line-clamp-1 text-xs font-medium text-brand-ink/80">
                             {event.titulo}
                           </p>
                         </button>
                       ))}
 
-                      {dayEvents.length > 3 ? (
-                        <div className="px-1 text-xs font-medium text-brand-graphite/[0.72]">
-                          + {dayEvents.length - 3} agendamento(s)
+                      {dayEvents.length > 2 ? (
+                        <div className="px-1 text-[10px] font-medium text-brand-graphite/60">
+                          + {dayEvents.length - 2} mais
                         </div>
                       ) : null}
                     </div>
@@ -199,73 +202,52 @@ export function CalendarioPage() {
 
           <AppCard className="h-fit space-y-5 xl:sticky xl:top-8">
             <div>
-              <h3 className="font-serif text-2xl font-semibold text-brand-ink">
+              <h3 className="text-xl font-semibold text-brand-ink">
                 Detalhes do atendimento
               </h3>
-              <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.78]">
-                Painel lateral simples para consultar os eventos selecionados.
+              <p className="mt-1 text-sm leading-6 text-brand-graphite">
+                Painel lateral para consulta rapida.
               </p>
             </div>
 
             {selectedAgendamento ? (
               <>
-                <div className="rounded-[24px] border border-brand-border bg-white/88 p-5">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <h4 className="text-xl font-semibold text-brand-ink">
+                <div className="rounded-xl border border-brand-border bg-brand-mist/40 p-4">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h4 className="text-lg font-semibold text-brand-ink">
                       {selectedAgendamento.titulo}
                     </h4>
                     <StatusBadge value={selectedAgendamento.status} />
                   </div>
 
-                  <div className="mt-4 space-y-2 text-sm leading-6 text-brand-graphite/[0.82]">
-                    <p>
-                      <strong>Cliente:</strong>{' '}
-                      {selectedAgendamento.clienteNome ||
-                        `Cliente #${selectedAgendamento.clienteId}`}
-                    </p>
-                    <p>
-                      <strong>Servico:</strong> {selectedAgendamento.servico}
-                    </p>
-                    <p>
-                      <strong>Horario:</strong>{' '}
-                      {formatDateTime(selectedAgendamento.dataHoraInicio)} ate{' '}
-                      {formatTime(selectedAgendamento.dataHoraFim)}
-                    </p>
-                    <p>
-                      <strong>Responsavel:</strong>{' '}
-                      {selectedAgendamento.responsavelNome || 'Nao atribuido'}
-                    </p>
-                    <p>
-                      <strong>Projeto:</strong>{' '}
-                      {selectedAgendamento.projetoNome || 'Nao vinculado'}
-                    </p>
-                    <p>
-                      <strong>Observacoes:</strong>{' '}
-                      {selectedAgendamento.observacoes ||
-                        'Sem observacoes cadastradas.'}
-                    </p>
+                  <div className="mt-3 space-y-1.5 text-sm leading-6 text-brand-graphite">
+                    <p><strong className="text-brand-ink/60">Cliente:</strong> {selectedAgendamento.clienteNome || `Cliente #${selectedAgendamento.clienteId}`}</p>
+                    <p><strong className="text-brand-ink/60">Servico:</strong> {selectedAgendamento.servico}</p>
+                    <p><strong className="text-brand-ink/60">Horario:</strong> {formatDateTime(selectedAgendamento.dataHoraInicio)} ate {formatTime(selectedAgendamento.dataHoraFim)}</p>
+                    <p><strong className="text-brand-ink/60">Responsavel:</strong> {selectedAgendamento.responsavelNome || 'Nao atribuido'}</p>
+                    <p><strong className="text-brand-ink/60">Projeto:</strong> {selectedAgendamento.projetoNome || 'Nao vinculado'}</p>
+                    <p><strong className="text-brand-ink/60">Observacoes:</strong> {selectedAgendamento.observacoes || 'Sem observacoes.'}</p>
                   </div>
                 </div>
 
-                <div className="rounded-[24px] border border-brand-border bg-brand-cream/85 p-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-berry">
+                <div className="rounded-xl border border-brand-border bg-brand-surface-raise/60 p-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-rose/70">
                     Eventos do mesmo dia
                   </p>
-                  <div className="mt-4 space-y-3">
+                  <div className="mt-3 space-y-2">
                     {selectedDayEvents.map((event) => (
                       <button
                         key={event.id}
                         type="button"
                         onClick={() => setSelectedAgendamento(event)}
-                        className="flex w-full items-start justify-between rounded-[18px] border border-brand-border bg-white px-4 py-3 text-left transition hover:border-brand-rose/40 hover:bg-brand-mist"
+                        className="flex w-full items-start justify-between rounded-xl border border-brand-border bg-brand-mist/40 px-3 py-2.5 text-left transition hover:border-brand-rose/20 hover:bg-brand-mist/60"
                       >
                         <span>
-                          <span className="block text-sm font-semibold text-brand-ink">
+                          <span className="block text-sm font-medium text-brand-ink">
                             {event.titulo}
                           </span>
-                          <span className="mt-1 block text-xs text-brand-graphite/[0.76]">
-                            {event.clienteNome || 'Cliente'} •{' '}
-                            {formatTime(event.dataHoraInicio)}
+                          <span className="mt-0.5 block text-xs text-brand-graphite/70">
+                            {event.clienteNome || 'Cliente'} • {formatTime(event.dataHoraInicio)}
                           </span>
                         </span>
                         <StatusBadge value={event.status} />
@@ -277,7 +259,7 @@ export function CalendarioPage() {
             ) : (
               <EmptyState
                 title="Selecione um evento"
-                description="Clique em um agendamento no calendario para visualizar os detalhes do atendimento."
+                description="Clique em um agendamento no calendario para ver detalhes."
                 actionLabel="Detalhes do dia"
               />
             )}

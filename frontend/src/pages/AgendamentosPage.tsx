@@ -319,7 +319,7 @@ export function AgendamentosPage() {
       <PageHeader
         eyebrow="Agenda operacional"
         title="Agendamentos"
-        description="Fluxo real de atendimentos com filtros por status, cliente e intervalo, formulario completo e atualizacao rapida de status para sustentar a agenda do studio."
+        description="Fluxo real de atendimentos com filtros por status, cliente e intervalo, formulario completo e atualizacao rapida de status."
         action={`${agendamentos.length} agendamento(s) visiveis`}
       />
 
@@ -327,35 +327,35 @@ export function AgendamentosPage() {
         <FeedbackBanner tone={feedback.tone} message={feedback.message} />
       ) : null}
 
-      <div className="grid gap-6 xl:grid-cols-[1.45fr_0.95fr]">
-        <AppCard className="space-y-6">
+      <div className="grid gap-5 xl:grid-cols-[1.45fr_0.95fr]">
+        <AppCard className="space-y-5">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
-                <h3 className="font-serif text-2xl font-semibold text-brand-ink">
+                <h3 className="text-xl font-semibold text-brand-ink">
                   Lista de agendamentos
                 </h3>
-                <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.78]">
-                  Consulte atendimentos por cliente, status ou intervalo de datas.
+                <p className="mt-1 text-sm leading-6 text-brand-graphite">
+                  Consulte atendimentos por cliente, status ou intervalo.
                 </p>
               </div>
 
               <button
                 type="button"
                 onClick={startCreate}
-                className="rounded-[20px] bg-gradient-to-r from-brand-rose to-brand-berry px-5 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-white shadow-soft transition hover:opacity-95"
+                className="sf-button-primary whitespace-nowrap"
               >
                 Novo agendamento
               </button>
             </div>
 
-            <div className="grid gap-3 lg:grid-cols-4">
+            <div className="grid gap-2 lg:grid-cols-4">
               <select
                 value={statusFilter}
                 onChange={(event) =>
                   setStatusFilter(event.target.value as AgendamentoFilterStatus)
                 }
-                className="rounded-[18px] border border-brand-border bg-brand-cream px-4 py-3 text-sm text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-select"
               >
                 <option value="TODOS">Todos os status</option>
                 {statusOptions.map((status) => (
@@ -370,7 +370,7 @@ export function AgendamentosPage() {
                 onChange={(event) =>
                   setClienteFilter(event.target.value as SelectValue)
                 }
-                className="rounded-[18px] border border-brand-border bg-brand-cream px-4 py-3 text-sm text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-select"
               >
                 <option value="TODOS">Todas as clientes</option>
                 {clientes.map((cliente) => (
@@ -384,22 +384,22 @@ export function AgendamentosPage() {
                 type="datetime-local"
                 value={rangeStart}
                 onChange={(event) => setRangeStart(event.target.value)}
-                className="rounded-[18px] border border-brand-border bg-brand-cream px-4 py-3 text-sm text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-input"
               />
 
               <input
                 type="datetime-local"
                 value={rangeEnd}
                 onChange={(event) => setRangeEnd(event.target.value)}
-                className="rounded-[18px] border border-brand-border bg-brand-cream px-4 py-3 text-sm text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-input"
               />
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2">
               <button
                 type="button"
                 onClick={() => void handleRangeFilter()}
-                className="rounded-full border border-brand-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-graphite transition hover:border-brand-rose/40 hover:bg-brand-mist"
+                className="sf-button-secondary"
               >
                 Aplicar intervalo
               </button>
@@ -410,7 +410,7 @@ export function AgendamentosPage() {
                   setRangeEnd('')
                   void loadAgendamentos()
                 }}
-                className="rounded-full border border-brand-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-graphite transition hover:border-brand-rose/40 hover:bg-brand-mist"
+                className="sf-button-secondary"
               >
                 Limpar intervalo
               </button>
@@ -436,62 +436,37 @@ export function AgendamentosPage() {
           {!loading && !error && agendamentos.length === 0 ? (
             <EmptyState
               title="Nenhum agendamento encontrado"
-              description="Ainda nao ha agendamentos para os filtros selecionados. Cadastre o primeiro atendimento para iniciar a agenda do studio."
+              description="Ainda nao ha agendamentos para os filtros selecionados."
               actionLabel="Criar agendamento"
             />
           ) : null}
 
           {!loading && !error && agendamentos.length > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {agendamentos.map((agendamento) => (
                 <article
                   key={agendamento.id}
-                  className="rounded-[26px] border border-brand-border bg-white/85 p-5"
+                  className="rounded-xl border border-brand-border bg-brand-mist/40 p-4"
                 >
-                  <div className="flex flex-col gap-5">
-                    <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                       <div>
-                        <div className="flex flex-wrap items-center gap-3">
-                          <h4 className="text-lg font-semibold text-brand-ink">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h4 className="text-base font-medium text-brand-ink">
                             {agendamento.titulo}
                           </h4>
                           <StatusBadge value={agendamento.status} />
                         </div>
-                        <div className="mt-3 space-y-2 text-sm leading-6 text-brand-graphite/[0.8]">
-                          <p>
-                            <strong>Servico:</strong> {agendamento.servico}
-                          </p>
-                          <p>
-                            <strong>Cliente:</strong>{' '}
-                            {agendamento.clienteNome ||
-                              `Cliente #${agendamento.clienteId}`}
-                          </p>
-                          <p>
-                            <strong>Responsavel:</strong>{' '}
-                            {agendamento.responsavelNome || 'Nao atribuido'}
-                          </p>
-                          <p>
-                            <strong>Projeto:</strong>{' '}
-                            {agendamento.projetoNome || 'Nao vinculado'}
-                          </p>
-                          <p>
-                            <strong>Inicio:</strong>{' '}
-                            {formatDateTime(agendamento.dataHoraInicio)}
-                          </p>
-                          <p>
-                            <strong>Fim:</strong>{' '}
-                            {formatDateTime(agendamento.dataHoraFim)}
-                          </p>
-                          <p>
-                            <strong>Observacoes:</strong>{' '}
-                            {agendamento.observacoes ||
-                              'Sem observacoes cadastradas.'}
-                          </p>
+                        <div className="mt-2 space-y-1 text-sm leading-6 text-brand-graphite">
+                          <p><strong className="text-brand-ink/60">Servico:</strong> {agendamento.servico}</p>
+                          <p><strong className="text-brand-ink/60">Cliente:</strong> {agendamento.clienteNome || `Cliente #${agendamento.clienteId}`}</p>
+                          <p><strong className="text-brand-ink/60">Responsavel:</strong> {agendamento.responsavelNome || 'Nao atribuido'}</p>
+                          <p><strong className="text-brand-ink/60">Projeto:</strong> {agendamento.projetoNome || 'Nao vinculado'}</p>
+                          <p><strong className="text-brand-ink/60">Inicio:</strong> {formatDateTime(agendamento.dataHoraInicio)}</p>
+                          <p><strong className="text-brand-ink/60">Fim:</strong> {formatDateTime(agendamento.dataHoraFim)}</p>
+                          <p><strong className="text-brand-ink/60">Observacoes:</strong> {agendamento.observacoes || 'Sem observacoes.'}</p>
                           {agendamento.updatedAt ? (
-                            <p>
-                              <strong>Atualizado em:</strong>{' '}
-                              {formatDate(agendamento.updatedAt)}
-                            </p>
+                            <p><strong className="text-brand-ink/60">Atualizado em:</strong> {formatDate(agendamento.updatedAt)}</p>
                           ) : null}
                         </div>
                       </div>
@@ -499,13 +474,13 @@ export function AgendamentosPage() {
                       <button
                         type="button"
                         onClick={() => startEdit(agendamento)}
-                        className="rounded-full border border-brand-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-graphite transition hover:border-brand-rose/40 hover:bg-brand-mist"
+                        className="sf-button-secondary"
                       >
                         Editar
                       </button>
                     </div>
 
-                    <div className="flex flex-col gap-3 rounded-[22px] bg-brand-cream p-4 sm:flex-row sm:items-center">
+                    <div className="flex flex-col gap-2 rounded-xl bg-brand-surface-raise/60 p-3 sm:flex-row sm:items-center">
                       <select
                         value={statusDrafts[agendamento.id] ?? agendamento.status}
                         onChange={(event) =>
@@ -515,7 +490,7 @@ export function AgendamentosPage() {
                               event.target.value as StatusAgendamento,
                           }))
                         }
-                        className="flex-1 rounded-[18px] border border-brand-border bg-white px-4 py-3 text-sm text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                        className="sf-select flex-1"
                       >
                         {statusOptions.map((status) => (
                           <option key={status.value} value={status.value}>
@@ -527,7 +502,7 @@ export function AgendamentosPage() {
                       <button
                         type="button"
                         onClick={() => void handleStatusUpdate(agendamento.id)}
-                        className="rounded-[18px] border border-brand-border bg-white px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-brand-graphite transition hover:border-brand-rose/40 hover:bg-brand-mist"
+                        className="sf-button-secondary"
                       >
                         Atualizar status
                       </button>
@@ -539,224 +514,88 @@ export function AgendamentosPage() {
           ) : null}
         </AppCard>
 
-        <AppCard className="h-fit space-y-6 xl:sticky xl:top-8">
+        <AppCard className="h-fit space-y-5 xl:sticky xl:top-8">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <h3 className="font-serif text-2xl font-semibold text-brand-ink">
+              <h3 className="text-xl font-semibold text-brand-ink">
                 {editingAgendamento ? 'Editar agendamento' : 'Novo agendamento'}
               </h3>
-              <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.78]">
-                Configure cliente, horario, servico, responsavel e projeto quando necessario.
+              <p className="mt-1 text-sm leading-6 text-brand-graphite">
+                Configure cliente, horario, servico e responsavel.
               </p>
             </div>
             {editingAgendamento ? (
               <button
                 type="button"
                 onClick={resetForm}
-                className="rounded-full border border-brand-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-graphite transition hover:bg-brand-mist"
+                className="sf-button-secondary"
               >
                 Cancelar
               </button>
             ) : null}
           </div>
 
-          <form className="space-y-5" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
-                Titulo
-              </span>
-              <input
-                required
-                value={formData.titulo}
-                onChange={(event) =>
-                  setFormData((current) => ({
-                    ...current,
-                    titulo: event.target.value,
-                  }))
-                }
-                placeholder="Ex.: Manutencao da Ana"
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-ink outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
-              />
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">Titulo</span>
+              <input required value={formData.titulo} onChange={(event) => setFormData((current) => ({ ...current, titulo: event.target.value }))} placeholder="Ex.: Manutencao da Ana" className="sf-input" />
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
-                Servico
-              </span>
-              <input
-                required
-                value={formData.servico}
-                onChange={(event) =>
-                  setFormData((current) => ({
-                    ...current,
-                    servico: event.target.value,
-                  }))
-                }
-                placeholder="Ex.: Alongamento em gel"
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-ink outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
-              />
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">Servico</span>
+              <input required value={formData.servico} onChange={(event) => setFormData((current) => ({ ...current, servico: event.target.value }))} placeholder="Ex.: Alongamento em gel" className="sf-input" />
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
-                Cliente
-              </span>
-              <select
-                required
-                value={formData.clienteId}
-                onChange={(event) =>
-                  setFormData((current) => ({
-                    ...current,
-                    clienteId: event.target.value,
-                  }))
-                }
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
-              >
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">Cliente</span>
+              <select required value={formData.clienteId} onChange={(event) => setFormData((current) => ({ ...current, clienteId: event.target.value }))} className="sf-select">
                 <option value="">Selecione uma cliente</option>
-                {clientes.map((cliente) => (
-                  <option key={cliente.id} value={String(cliente.id)}>
-                    {cliente.nome}
-                  </option>
-                ))}
+                {clientes.map((cliente) => (<option key={cliente.id} value={String(cliente.id)}>{cliente.nome}</option>))}
               </select>
             </label>
 
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-3 md:grid-cols-2">
               <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-brand-graphite">
-                  Inicio
-                </span>
-                <input
-                  type="datetime-local"
-                  required
-                  value={formData.dataHoraInicio}
-                  onChange={(event) =>
-                    setFormData((current) => ({
-                      ...current,
-                      dataHoraInicio: event.target.value,
-                    }))
-                  }
-                  className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-ink outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
-                />
+                <span className="mb-1.5 block text-sm font-medium text-brand-graphite">Inicio</span>
+                <input type="datetime-local" required value={formData.dataHoraInicio} onChange={(event) => setFormData((current) => ({ ...current, dataHoraInicio: event.target.value }))} className="sf-input" />
               </label>
-
               <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-brand-graphite">
-                  Fim
-                </span>
-                <input
-                  type="datetime-local"
-                  required
-                  value={formData.dataHoraFim}
-                  onChange={(event) =>
-                    setFormData((current) => ({
-                      ...current,
-                      dataHoraFim: event.target.value,
-                    }))
-                  }
-                  className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-ink outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
-                />
+                <span className="mb-1.5 block text-sm font-medium text-brand-graphite">Fim</span>
+                <input type="datetime-local" required value={formData.dataHoraFim} onChange={(event) => setFormData((current) => ({ ...current, dataHoraFim: event.target.value }))} className="sf-input" />
               </label>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-3 md:grid-cols-2">
               <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-brand-graphite">
-                  Status
-                </span>
-                <select
-                  value={formData.status}
-                  onChange={(event) =>
-                    setFormData((current) => ({
-                      ...current,
-                      status: event.target.value as StatusAgendamento,
-                    }))
-                  }
-                  className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
-                >
-                  {statusOptions.map((status) => (
-                    <option key={status.value} value={status.value}>
-                      {status.label}
-                    </option>
-                  ))}
+                <span className="mb-1.5 block text-sm font-medium text-brand-graphite">Status</span>
+                <select value={formData.status} onChange={(event) => setFormData((current) => ({ ...current, status: event.target.value as StatusAgendamento }))} className="sf-select">
+                  {statusOptions.map((status) => (<option key={status.value} value={status.value}>{status.label}</option>))}
                 </select>
               </label>
-
               <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-brand-graphite">
-                  Responsavel
-                </span>
-                <select
-                  value={formData.responsavelId}
-                  onChange={(event) =>
-                    setFormData((current) => ({
-                      ...current,
-                      responsavelId: event.target.value,
-                    }))
-                  }
-                  className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
-                >
+                <span className="mb-1.5 block text-sm font-medium text-brand-graphite">Responsavel</span>
+                <select value={formData.responsavelId} onChange={(event) => setFormData((current) => ({ ...current, responsavelId: event.target.value }))} className="sf-select">
                   <option value="">Sem responsavel</option>
-                  {usuarios.map((usuario) => (
-                    <option key={usuario.id} value={String(usuario.id)}>
-                      {usuario.nome}
-                    </option>
-                  ))}
+                  {usuarios.map((usuario) => (<option key={usuario.id} value={String(usuario.id)}>{usuario.nome}</option>))}
                 </select>
               </label>
             </div>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
-                Projeto
-              </span>
-              <select
-                value={formData.projetoId}
-                onChange={(event) =>
-                  setFormData((current) => ({
-                    ...current,
-                    projetoId: event.target.value,
-                  }))
-                }
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
-              >
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">Projeto</span>
+              <select value={formData.projetoId} onChange={(event) => setFormData((current) => ({ ...current, projetoId: event.target.value }))} className="sf-select">
                 <option value="">Sem projeto</option>
-                {projetos.map((projeto) => (
-                  <option key={projeto.id} value={String(projeto.id)}>
-                    {projeto.nome}
-                  </option>
-                ))}
+                {projetos.map((projeto) => (<option key={projeto.id} value={String(projeto.id)}>{projeto.nome}</option>))}
               </select>
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
-                Observacoes
-              </span>
-              <textarea
-                rows={4}
-                value={formData.observacoes}
-                onChange={(event) =>
-                  setFormData((current) => ({
-                    ...current,
-                    observacoes: event.target.value,
-                  }))
-                }
-                placeholder="Detalhes importantes do atendimento."
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-ink outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
-              />
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">Observacoes</span>
+              <textarea rows={4} value={formData.observacoes} onChange={(event) => setFormData((current) => ({ ...current, observacoes: event.target.value }))} placeholder="Detalhes importantes do atendimento." className="sf-textarea" />
             </label>
 
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full rounded-[22px] bg-gradient-to-r from-brand-rose to-brand-berry px-5 py-3.5 text-sm font-semibold uppercase tracking-[0.18em] text-white shadow-soft transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {submitting
-                ? 'Salvando...'
-                : editingAgendamento
-                  ? 'Salvar alteracoes'
-                  : 'Criar agendamento'}
+            <button type="submit" disabled={submitting} className="sf-button-primary w-full">
+              {submitting ? 'Salvando...' : editingAgendamento ? 'Salvar alteracoes' : 'Criar agendamento'}
             </button>
           </form>
         </AppCard>

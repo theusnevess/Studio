@@ -13,18 +13,20 @@ export function EmptyState({
   actionLabel,
 }: EmptyStateProps) {
   return (
-    <div className="rounded-[26px] border border-dashed border-brand-border bg-brand-cream/80 p-8 text-center">
-      <span className="inline-flex rounded-full bg-brand-mist px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-brand-berry">
-        StudioFlow
-      </span>
-      <h3 className="mt-5 font-serif text-3xl font-semibold text-brand-ink">
+    <div className="rounded-2xl border border-dashed border-brand-border bg-brand-mist/40 p-8 text-center">
+      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-rose/10">
+        <svg className="h-6 w-6 text-brand-rose/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m6 4.125l2.25 2.25m0 0l2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+        </svg>
+      </div>
+      <h3 className="text-lg font-semibold text-brand-ink">
         {title}
       </h3>
-      <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-brand-graphite/[0.78]">
+      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-brand-graphite">
         {description}
       </p>
       {actionLabel ? (
-        <span className="mt-6 inline-flex rounded-full border border-brand-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand-graphite">
+        <span className="mt-4 inline-flex sf-chip text-brand-graphite">
           {actionLabel}
         </span>
       ) : null}

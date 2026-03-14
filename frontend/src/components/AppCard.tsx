@@ -6,14 +6,12 @@ type AppCardProps = PropsWithChildren<{
 
 /**
  * Card base da interface.
- *
- * Mantem consistencia visual entre dashboard, placeholders e futuras listagens.
  */
 export function AppCard({ children, className = '' }: AppCardProps) {
   return (
     <section
       className={[
-        'rounded-[30px] border border-brand-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,249,247,0.96))] p-6 shadow-soft',
+        'rounded-2xl border border-brand-border bg-white/[0.03] p-6 backdrop-blur-sm transition-all',
         className,
       ].join(' ')}
     >

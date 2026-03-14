@@ -11,9 +11,6 @@ type PagePlaceholderProps = {
 
 /**
  * Componente reutilizavel para telas ainda nao implementadas.
- *
- * Ele evita repeticao nas paginas iniciais e deixa claro que a rota ja existe,
- * mas a funcionalidade sera detalhada em etapas futuras.
  */
 export function PagePlaceholder({
   title,

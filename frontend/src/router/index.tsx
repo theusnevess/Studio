@@ -1,10 +1,9 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { Navigate, createBrowserRouter } from 'react-router-dom'
 import { AppLayout } from '../layouts/AppLayout'
 import { AgendamentosPage } from '../pages/AgendamentosPage'
 import { CalendarioPage } from '../pages/CalendarioPage'
 import { ClientesPage } from '../pages/ClientesPage'
 import { DashboardPage } from '../pages/DashboardPage'
-import { KanbanPage } from '../pages/KanbanPage'
 import { LoginPage } from '../pages/LoginPage'
 import { NotificacoesPage } from '../pages/NotificacoesPage'
 import { ProjetosPage } from '../pages/ProjetosPage'
@@ -51,7 +50,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'kanban',
-        element: <KanbanPage />,
+        element: <Navigate to="/tarefas" replace />,
       },
       {
         path: 'notificacoes',

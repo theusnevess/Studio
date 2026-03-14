@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react'
+
 /**
  * Tipo simples que representa um item de navegacao da interface.
  */
@@ -6,4 +8,5 @@ export type AppRouteLink = {
   to: string
   shortLabel: string
   description: string
+  icon?: ReactNode
 }

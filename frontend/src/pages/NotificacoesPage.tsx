@@ -150,7 +150,7 @@ export function NotificacoesPage() {
       <PageHeader
         eyebrow="Avisos internos"
         title="Notificacoes"
-        description="Modulo real de notificacoes internas para acompanhar lembretes de atendimento, avisos operacionais e informacoes importantes do studio."
+        description="Modulo real de notificacoes internas para acompanhar lembretes, avisos operacionais e informacoes do studio."
         action={`${notificacoes.length} notificacao(oes) visiveis`}
       />
 
@@ -158,19 +158,19 @@ export function NotificacoesPage() {
         <FeedbackBanner tone={feedback.tone} message={feedback.message} />
       ) : null}
 
-      <div className="grid gap-6 xl:grid-cols-[1.35fr_0.95fr]">
-        <AppCard className="space-y-6">
+      <div className="grid gap-5 xl:grid-cols-[1.35fr_0.95fr]">
+        <AppCard className="space-y-5">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h3 className="font-serif text-2xl font-semibold text-brand-ink">
+              <h3 className="text-xl font-semibold text-brand-ink">
                 Caixa de notificacoes
               </h3>
-              <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.78]">
-                Filtre por visualizacao ou por usuario responsavel para consultar os avisos do sistema.
+              <p className="mt-1 text-sm leading-6 text-brand-graphite">
+                Filtre por visualizacao ou por usuario.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <select
                 value={visualizacaoFilter}
                 onChange={(event) =>
@@ -178,7 +178,7 @@ export function NotificacoesPage() {
                     event.target.value as VisualizacaoFilter,
                   )
                 }
-                className="rounded-[18px] border border-brand-border bg-brand-cream px-4 py-3 text-sm text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-select"
               >
                 <option value="TODAS">Todas</option>
                 <option value="NAO_VISUALIZADA">Nao visualizadas</option>
@@ -190,7 +190,7 @@ export function NotificacoesPage() {
                 onChange={(event) =>
                   setUsuarioFilter(event.target.value as UsuarioFilter)
                 }
-                className="rounded-[18px] border border-brand-border bg-brand-cream px-4 py-3 text-sm text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-select"
               >
                 <option value="TODOS">Todos os usuarios</option>
                 {usuarios.map((usuario) => (
@@ -216,31 +216,31 @@ export function NotificacoesPage() {
           {!loading && !error && notificacoes.length === 0 ? (
             <EmptyState
               title="Nenhuma notificacao encontrada"
-              description="Ainda nao ha notificacoes para os filtros selecionados. Quando novos lembretes forem gerados, eles aparecerao aqui."
+              description="Ainda nao ha notificacoes para os filtros selecionados."
               actionLabel="Caixa vazia"
             />
           ) : null}
 
           {!loading && !error && notificacoes.length > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {notificacoes.map((notificacao) => (
                 <article
                   key={notificacao.id}
                   className={[
-                    'rounded-[26px] border p-5 transition',
+                    'rounded-xl border p-4 transition',
                     selectedNotification?.id === notificacao.id
-                      ? 'border-brand-rose/40 bg-brand-mist/70'
-                      : 'border-brand-border bg-white/88',
+                      ? 'border-brand-rose/20 bg-brand-rose/[0.04]'
+                      : 'border-brand-border bg-brand-mist/40',
                   ].join(' ')}
                 >
-                  <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                  <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                     <button
                       type="button"
                       onClick={() => setSelectedNotification(notificacao)}
                       className="flex-1 text-left"
                     >
                       <div className="flex flex-wrap items-center gap-2">
-                        <h4 className="text-lg font-semibold text-brand-ink">
+                        <h4 className="text-base font-medium text-brand-ink">
                           {notificacao.titulo}
                         </h4>
                         <StatusBadge value={notificacao.tipo} />
@@ -253,14 +253,12 @@ export function NotificacoesPage() {
                         />
                       </div>
 
-                      <p className="mt-3 text-sm leading-6 text-brand-graphite/[0.8]">
+                      <p className="mt-2 text-sm leading-6 text-brand-graphite">
                         {notificacao.mensagem}
                       </p>
 
-                      <div className="mt-3 space-y-1 text-xs leading-5 text-brand-graphite/[0.72]">
-                        <p>
-                          Envio: {formatDateTime(notificacao.dataHoraEnvio)}
-                        </p>
+                      <div className="mt-2 space-y-0.5 text-xs leading-5 text-brand-graphite/60">
+                        <p>Envio: {formatDateTime(notificacao.dataHoraEnvio)}</p>
                         <p>
                           Usuario:{' '}
                           {notificacao.usuarioNome ||
@@ -273,7 +271,7 @@ export function NotificacoesPage() {
                       type="button"
                       disabled={notificacao.visualizada || markingId === notificacao.id}
                       onClick={() => void handleMarkAsViewed(notificacao)}
-                      className="rounded-full border border-brand-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-graphite transition hover:border-brand-rose/40 hover:bg-brand-mist disabled:cursor-not-allowed disabled:opacity-50"
+                      className="sf-button-secondary disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       {markingId === notificacao.id
                         ? 'Salvando...'
@@ -290,19 +288,19 @@ export function NotificacoesPage() {
 
         <AppCard className="h-fit space-y-5 xl:sticky xl:top-8">
           <div>
-            <h3 className="font-serif text-2xl font-semibold text-brand-ink">
+            <h3 className="text-xl font-semibold text-brand-ink">
               Detalhes da notificacao
             </h3>
-            <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.78]">
-              Painel lateral para leitura completa e contexto do alerta selecionado.
+            <p className="mt-1 text-sm leading-6 text-brand-graphite">
+              Painel lateral para leitura completa do alerta.
             </p>
           </div>
 
           {selectedNotification ? (
             <>
-              <div className="rounded-[24px] border border-brand-border bg-white/88 p-5">
+              <div className="rounded-xl border border-brand-border bg-brand-mist/40 p-4">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h4 className="text-xl font-semibold text-brand-ink">
+                  <h4 className="text-lg font-semibold text-brand-ink">
                     {selectedNotification.titulo}
                   </h4>
                   <StatusBadge value={selectedNotification.tipo} />
@@ -315,24 +313,12 @@ export function NotificacoesPage() {
                   />
                 </div>
 
-                <div className="mt-4 space-y-3 text-sm leading-6 text-brand-graphite/[0.82]">
+                <div className="mt-3 space-y-2 text-sm leading-6 text-brand-graphite">
                   <p>{selectedNotification.mensagem}</p>
-                  <p>
-                    <strong>Usuario:</strong>{' '}
-                    {selectedNotification.usuarioNome ||
-                      `Usuario #${selectedNotification.usuarioId}`}
-                  </p>
-                  <p>
-                    <strong>Tipo:</strong> {selectedNotification.tipo}
-                  </p>
-                  <p>
-                    <strong>Enviada em:</strong>{' '}
-                    {formatDateTime(selectedNotification.dataHoraEnvio)}
-                  </p>
-                  <p>
-                    <strong>Agendamento:</strong>{' '}
-                    {selectedNotification.agendamentoTitulo || 'Nao vinculado'}
-                  </p>
+                  <p><strong className="text-brand-ink/60">Usuario:</strong> {selectedNotification.usuarioNome || `Usuario #${selectedNotification.usuarioId}`}</p>
+                  <p><strong className="text-brand-ink/60">Tipo:</strong> {selectedNotification.tipo}</p>
+                  <p><strong className="text-brand-ink/60">Enviada em:</strong> {formatDateTime(selectedNotification.dataHoraEnvio)}</p>
+                  <p><strong className="text-brand-ink/60">Agendamento:</strong> {selectedNotification.agendamentoTitulo || 'Nao vinculado'}</p>
                 </div>
               </div>
 
@@ -341,14 +327,14 @@ export function NotificacoesPage() {
                   type="button"
                   disabled={markingId === selectedNotification.id}
                   onClick={() => void handleMarkAsViewed(selectedNotification)}
-                  className="w-full rounded-[22px] bg-gradient-to-r from-brand-rose to-brand-berry px-5 py-3.5 text-sm font-semibold uppercase tracking-[0.18em] text-white shadow-soft transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="sf-button-primary w-full"
                 >
                   {markingId === selectedNotification.id
                     ? 'Salvando...'
                     : 'Marcar como visualizada'}
                 </button>
               ) : (
-                <div className="rounded-[22px] border border-emerald-200 bg-emerald-50 px-4 py-4 text-center text-sm font-medium text-emerald-700">
+                <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-center text-sm font-medium text-emerald-400">
                   Esta notificacao ja foi visualizada.
                 </div>
               )}
@@ -356,7 +342,7 @@ export function NotificacoesPage() {
           ) : (
             <EmptyState
               title="Selecione uma notificacao"
-              description="Clique em uma notificacao da lista para visualizar os detalhes completos no painel lateral."
+              description="Clique em uma notificacao da lista para ver detalhes."
               actionLabel="Detalhes"
             />
           )}

@@ -66,7 +66,7 @@ function parseOptionalId(value: string) {
 }
 
 /**
- * Tela integrada de tarefas, preparada para alimentar o futuro Kanban.
+ * Tela integrada de tarefas para acompanhamento operacional do studio.
  */
 export function TarefasPage() {
   usePageTitle('Tarefas')
@@ -240,7 +240,7 @@ export function TarefasPage() {
       <PageHeader
         eyebrow="Fluxo operacional"
         title="Tarefas"
-        description="Controle real das tarefas do studio com filtros por status e projeto, formulario completo e atualizacao rapida de status para sustentar o futuro Kanban."
+        description="Controle real das tarefas do studio com filtros por status e projeto, formulario completo e atualizacao rapida de status."
         action={`${tarefas.length} tarefa(s) visiveis`}
       />
 
@@ -248,25 +248,25 @@ export function TarefasPage() {
         <FeedbackBanner tone={feedback.tone} message={feedback.message} />
       ) : null}
 
-      <div className="grid gap-6 xl:grid-cols-[1.45fr_0.95fr]">
-        <AppCard className="space-y-6">
+      <div className="grid gap-5 xl:grid-cols-[1.45fr_0.95fr]">
+        <AppCard className="space-y-5">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h3 className="font-serif text-2xl font-semibold text-brand-ink">
+              <h3 className="text-xl font-semibold text-brand-ink">
                 Lista de tarefas
               </h3>
-              <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.78]">
-                Filtre por status ou projeto e acompanhe o andamento da rotina.
+              <p className="mt-1 text-sm leading-6 text-brand-graphite">
+                Filtre por status ou projeto.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <select
                 value={statusFilter}
                 onChange={(event) =>
                   setStatusFilter(event.target.value as TarefaFilterStatus)
                 }
-                className="rounded-[18px] border border-brand-border bg-brand-cream px-4 py-3 text-sm text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-select"
               >
                 <option value="TODOS">Todos os status</option>
                 {statusOptions.map((status) => (
@@ -281,7 +281,7 @@ export function TarefasPage() {
                 onChange={(event) =>
                   setProjetoFilter(event.target.value as SelectValue)
                 }
-                className="rounded-[18px] border border-brand-border bg-brand-cream px-4 py-3 text-sm text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-select"
               >
                 <option value="TODOS">Todos os projetos</option>
                 {projetos.map((projeto) => (
@@ -294,7 +294,7 @@ export function TarefasPage() {
               <button
                 type="button"
                 onClick={startCreate}
-                className="rounded-[20px] bg-gradient-to-r from-brand-rose to-brand-berry px-5 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-white shadow-soft transition hover:opacity-95"
+                className="sf-button-primary whitespace-nowrap"
               >
                 Nova tarefa
               </button>
@@ -315,50 +315,50 @@ export function TarefasPage() {
           {!loading && !error && tarefas.length === 0 ? (
             <EmptyState
               title="Nenhuma tarefa encontrada"
-              description="Ainda nao ha tarefas para os filtros selecionados. Crie a primeira tarefa operacional do studio."
+              description="Ainda nao ha tarefas para os filtros selecionados."
               actionLabel="Criar tarefa"
             />
           ) : null}
 
           {!loading && !error && tarefas.length > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {tarefas.map((tarefa) => (
                 <article
                   key={tarefa.id}
-                  className="rounded-[26px] border border-brand-border bg-white/85 p-5"
+                  className="rounded-xl border border-brand-border bg-brand-mist/40 p-4"
                 >
-                  <div className="flex flex-col gap-5">
-                    <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                       <div>
-                        <div className="flex flex-wrap items-center gap-3">
-                          <h4 className="text-lg font-semibold text-brand-ink">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h4 className="text-base font-medium text-brand-ink">
                             {tarefa.titulo}
                           </h4>
                           <StatusBadge value={tarefa.status} />
                           <StatusBadge value={tarefa.prioridade} />
                         </div>
-                        <div className="mt-3 space-y-2 text-sm leading-6 text-brand-graphite/[0.8]">
+                        <div className="mt-2 space-y-1 text-sm leading-6 text-brand-graphite">
                           <p>
-                            <strong>Projeto:</strong>{' '}
+                            <strong className="text-brand-ink/60">Projeto:</strong>{' '}
                             {tarefa.projetoNome || `Projeto #${tarefa.projetoId}`}
                           </p>
                           <p>
-                            <strong>Responsavel:</strong>{' '}
+                            <strong className="text-brand-ink/60">Responsavel:</strong>{' '}
                             {tarefa.responsavelNome || 'Nao atribuido'}
                           </p>
                           <p>
-                            <strong>Descricao:</strong>{' '}
-                            {tarefa.descricao || 'Sem descricao cadastrada.'}
+                            <strong className="text-brand-ink/60">Descricao:</strong>{' '}
+                            {tarefa.descricao || 'Sem descricao.'}
                           </p>
                           <p>
-                            <strong>Vencimento:</strong>{' '}
+                            <strong className="text-brand-ink/60">Vencimento:</strong>{' '}
                             {tarefa.dataVencimento
                               ? formatDateTime(tarefa.dataVencimento)
-                              : 'Sem prazo definido'}
+                              : 'Sem prazo'}
                           </p>
                           {tarefa.updatedAt ? (
                             <p>
-                              <strong>Atualizada em:</strong>{' '}
+                              <strong className="text-brand-ink/60">Atualizada em:</strong>{' '}
                               {formatDate(tarefa.updatedAt)}
                             </p>
                           ) : null}
@@ -368,13 +368,13 @@ export function TarefasPage() {
                       <button
                         type="button"
                         onClick={() => startEdit(tarefa)}
-                        className="rounded-full border border-brand-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-graphite transition hover:border-brand-rose/40 hover:bg-brand-mist"
+                        className="sf-button-secondary"
                       >
                         Editar
                       </button>
                     </div>
 
-                    <div className="flex flex-col gap-3 rounded-[22px] bg-brand-cream p-4 sm:flex-row sm:items-center">
+                    <div className="flex flex-col gap-2 rounded-xl bg-brand-surface-raise/60 p-3 sm:flex-row sm:items-center">
                       <select
                         value={statusDrafts[tarefa.id] ?? tarefa.status}
                         onChange={(event) =>
@@ -383,7 +383,7 @@ export function TarefasPage() {
                             [tarefa.id]: event.target.value as StatusTarefa,
                           }))
                         }
-                        className="flex-1 rounded-[18px] border border-brand-border bg-white px-4 py-3 text-sm text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                        className="sf-select flex-1"
                       >
                         {statusOptions.map((status) => (
                           <option key={status.value} value={status.value}>
@@ -395,7 +395,7 @@ export function TarefasPage() {
                       <button
                         type="button"
                         onClick={() => void handleStatusUpdate(tarefa.id)}
-                        className="rounded-[18px] border border-brand-border bg-white px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-brand-graphite transition hover:border-brand-rose/40 hover:bg-brand-mist"
+                        className="sf-button-secondary"
                       >
                         Atualizar status
                       </button>
@@ -407,30 +407,30 @@ export function TarefasPage() {
           ) : null}
         </AppCard>
 
-        <AppCard className="h-fit space-y-6 xl:sticky xl:top-8">
+        <AppCard className="h-fit space-y-5 xl:sticky xl:top-8">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <h3 className="font-serif text-2xl font-semibold text-brand-ink">
+              <h3 className="text-xl font-semibold text-brand-ink">
                 {editingTarefa ? 'Editar tarefa' : 'Nova tarefa'}
               </h3>
-              <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.78]">
-                Defina projeto, prioridade, responsavel e prazo da tarefa.
+              <p className="mt-1 text-sm leading-6 text-brand-graphite">
+                Defina projeto, prioridade e prazo.
               </p>
             </div>
             {editingTarefa ? (
               <button
                 type="button"
                 onClick={resetForm}
-                className="rounded-full border border-brand-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-graphite transition hover:bg-brand-mist"
+                className="sf-button-secondary"
               >
                 Cancelar
               </button>
             ) : null}
           </div>
 
-          <form className="space-y-5" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">
                 Titulo
               </span>
               <input
@@ -443,12 +443,12 @@ export function TarefasPage() {
                   }))
                 }
                 placeholder="Ex.: Organizar materiais da semana"
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-ink outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-input"
               />
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">
                 Descricao
               </span>
               <textarea
@@ -461,13 +461,13 @@ export function TarefasPage() {
                   }))
                 }
                 placeholder="Descreva o que precisa ser feito."
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-ink outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-textarea"
               />
             </label>
 
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-3 md:grid-cols-2">
               <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-brand-graphite">
+                <span className="mb-1.5 block text-sm font-medium text-brand-graphite">
                   Status
                 </span>
                 <select
@@ -478,7 +478,7 @@ export function TarefasPage() {
                       status: event.target.value as StatusTarefa,
                     }))
                   }
-                  className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                  className="sf-select"
                 >
                   {statusOptions.map((status) => (
                     <option key={status.value} value={status.value}>
@@ -489,7 +489,7 @@ export function TarefasPage() {
               </label>
 
               <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-brand-graphite">
+                <span className="mb-1.5 block text-sm font-medium text-brand-graphite">
                   Prioridade
                 </span>
                 <select
@@ -500,7 +500,7 @@ export function TarefasPage() {
                       prioridade: event.target.value as PrioridadeTarefa,
                     }))
                   }
-                  className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                  className="sf-select"
                 >
                   {prioridadeOptions.map((prioridade) => (
                     <option key={prioridade.value} value={prioridade.value}>
@@ -512,7 +512,7 @@ export function TarefasPage() {
             </div>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">
                 Projeto
               </span>
               <select
@@ -524,7 +524,7 @@ export function TarefasPage() {
                     projetoId: event.target.value,
                   }))
                 }
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-select"
               >
                 <option value="">Selecione um projeto</option>
                 {projetos.map((projeto) => (
@@ -536,7 +536,7 @@ export function TarefasPage() {
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">
                 Responsavel
               </span>
               <select
@@ -547,7 +547,7 @@ export function TarefasPage() {
                     responsavelId: event.target.value,
                   }))
                 }
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-select"
               >
                 <option value="">Sem responsavel</option>
                 {usuarios.map((usuario) => (
@@ -559,7 +559,7 @@ export function TarefasPage() {
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">
                 Data de vencimento
               </span>
               <input
@@ -571,14 +571,14 @@ export function TarefasPage() {
                     dataVencimento: event.target.value,
                   }))
                 }
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-ink outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-input"
               />
             </label>
 
             <button
               type="submit"
               disabled={submitting}
-              className="w-full rounded-[22px] bg-gradient-to-r from-brand-rose to-brand-berry px-5 py-3.5 text-sm font-semibold uppercase tracking-[0.18em] text-white shadow-soft transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+              className="sf-button-primary w-full"
             >
               {submitting
                 ? 'Salvando...'

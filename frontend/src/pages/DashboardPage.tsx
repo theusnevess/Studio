@@ -3,6 +3,7 @@ import { AppCard } from '../components/AppCard'
 import { EmptyState } from '../components/EmptyState'
 import { ErrorState } from '../components/ErrorState'
 import { LoadingState } from '../components/LoadingState'
+import { NailArtAnimation } from '../components/NailArtAnimation'
 import { PageHeader } from '../components/PageHeader'
 import { StatusBadge } from '../components/StatusBadge'
 import { agendamentoService } from '../services/agendamentoService'
@@ -21,9 +22,6 @@ const quickActions = [
 
 /**
  * Pagina inicial do painel.
- *
- * Nesta etapa, a tela ja apresenta uma versao mais realista da operacao do
- * studio, com cards de resumo e secoes preparadas para integracao futura.
  */
 export function DashboardPage() {
   const [appointments, setAppointments] = useState<Agendamento[]>([])
@@ -46,7 +44,11 @@ export function DashboardPage() {
           ])
 
         setAppointments(appointmentsResponse.slice(0, 3))
-        setTasks(tasksResponse.filter((task) => task.status !== 'CONCLUIDO').slice(0, 3))
+        setTasks(
+          tasksResponse
+            .filter((task) => task.status !== 'CONCLUIDO')
+            .slice(0, 3),
+        )
         setNotifications(notificationsResponse.slice(0, 4))
       } catch (loadError) {
         setError(getErrorMessage(loadError))
@@ -89,16 +91,49 @@ export function DashboardPage() {
         description="Resumo inicial da operacao com foco em organizacao, acompanhamento diario e tomada rapida de acao."
       />
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      {/* Hero section */}
+      <div className="relative overflow-hidden rounded-2xl border border-brand-border bg-white/[0.02] px-6 py-8 lg:px-8">
+        <NailArtAnimation />
+
+        <div className="relative z-10 grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+          <div className="max-w-2xl">
+            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-brand-rose/80">
+              Rotina organizada
+            </p>
+            <h3 className="mt-3 max-w-3xl text-3xl font-semibold text-brand-ink lg:text-4xl">
+              Uma base bonita, clara e realmente utilizavel no dia a dia do studio.
+            </h3>
+            <p className="mt-3 max-w-xl text-sm leading-7 text-brand-graphite">
+              O StudioFlow concentra clientes, tarefas, atendimentos e lembretes em um painel unico, com leitura simples e cara de produto real.
+            </p>
+          </div>
+
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+            {quickActions.map((action) => (
+              <button
+                key={action}
+                type="button"
+                className="rounded-xl border border-brand-border bg-white/[0.03] px-4 py-3 text-left text-sm font-medium text-brand-ink/80 transition hover:border-brand-rose/20 hover:bg-white/[0.06]"
+              >
+                {action}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Summary cards */}
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 animate-fade-in-up [animation-delay:100ms]">
         {summaryCards.map((card) => (
-          <AppCard key={card.title} className="overflow-hidden">
-            <p className="text-sm font-medium text-brand-graphite/[0.72]">
+          <AppCard key={card.title} className="relative overflow-hidden">
+            <div className="pointer-events-none absolute right-0 top-0 -mr-6 -mt-6 h-20 w-20 rounded-full bg-brand-rose/[0.04] blur-2xl" />
+            <p className="relative z-10 text-sm font-medium text-brand-graphite">
               {card.title}
             </p>
-            <p className="mt-4 font-serif text-5xl font-semibold text-brand-ink">
+            <p className="relative z-10 mt-3 text-4xl font-semibold text-brand-ink">
               {card.value}
             </p>
-            <p className="mt-3 text-sm leading-6 text-brand-graphite/[0.78]">
+            <p className="relative z-10 mt-2 text-sm leading-6 text-brand-graphite/70">
               {card.detail}
             </p>
           </AppCard>
@@ -116,37 +151,39 @@ export function DashboardPage() {
         />
       ) : null}
 
-      <div className="grid gap-6 xl:grid-cols-[1.4fr_1fr]">
+      {/* Appointments + Shortcuts */}
+      <div className="grid gap-5 xl:grid-cols-[1.4fr_1fr] animate-fade-in-up [animation-delay:200ms]">
         <AppCard>
           <div className="flex items-center justify-between gap-3">
             <div>
-              <h2 className="font-serif text-2xl font-semibold text-brand-ink">
+              <h2 className="text-xl font-semibold text-brand-ink">
                 Proximos atendimentos
               </h2>
-              <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.74]">
-                Bloco inicial da agenda operacional, pronto para receber dados reais do backend.
+              <p className="mt-1 text-sm leading-6 text-brand-graphite">
+                Bloco inicial da agenda operacional.
               </p>
             </div>
-            <span className="rounded-full bg-brand-mist px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-berry">
+            <span className="sf-chip text-brand-amber">
               Hoje
             </span>
           </div>
 
-          <div className="mt-6 space-y-4">
+          <div className="mt-5 space-y-3">
             {appointments.map((appointment) => (
               <div
                 key={appointment.id}
-                className="rounded-[24px] border border-brand-border bg-white/80 p-5"
+                className="rounded-xl border border-brand-border bg-brand-mist/40 px-4 py-3 transition-colors hover:bg-brand-mist/60"
               >
-                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                   <div>
-                    <p className="text-lg font-semibold text-brand-ink">
+                    <p className="text-base font-medium text-brand-ink">
                       {appointment.titulo}
                     </p>
-                    <p className="mt-1 text-sm text-brand-graphite/[0.76]">
+                    <p className="mt-0.5 text-sm text-brand-graphite">
                       {appointment.clienteNome || 'Cliente nao identificado'}
                     </p>
-                    <p className="mt-3 text-sm text-brand-graphite/[0.72]">
+                    <p className="mt-2 flex items-center gap-2 text-xs text-brand-graphite/70">
+                      <span className="h-1.5 w-1.5 rounded-full bg-brand-rose animate-glow-pulse" />
                       {formatDateTime(appointment.dataHoraInicio)}
                     </p>
                   </div>
@@ -154,6 +191,7 @@ export function DashboardPage() {
                 </div>
               </div>
             ))}
+
             {!loading && appointments.length === 0 ? (
               <EmptyState
                 title="Sem atendimentos no painel"
@@ -165,19 +203,19 @@ export function DashboardPage() {
         </AppCard>
 
         <AppCard>
-          <h2 className="font-serif text-2xl font-semibold text-brand-ink">
+          <h2 className="text-xl font-semibold text-brand-ink">
             Atalhos do dia
           </h2>
-          <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.74]">
-            Acoes rapidas para manter o fluxo da rotina organizado.
+          <p className="mt-1 text-sm leading-6 text-brand-graphite">
+            Acoes rapidas para manter o fluxo organizado.
           </p>
 
-          <div className="mt-6 grid gap-3">
+          <div className="mt-5 grid gap-2">
             {quickActions.map((action) => (
               <button
                 key={action}
                 type="button"
-                className="rounded-[22px] border border-brand-border bg-brand-cream px-4 py-4 text-left text-sm font-medium text-brand-graphite transition hover:border-brand-rose/40 hover:bg-brand-mist"
+                className="rounded-xl border border-brand-border bg-brand-mist/40 px-4 py-3 text-left text-sm font-medium text-brand-ink/80 transition hover:border-brand-rose/20 hover:bg-brand-mist/60"
               >
                 {action}
               </button>
@@ -186,86 +224,92 @@ export function DashboardPage() {
         </AppCard>
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+      {/* Tasks + Notifications */}
+      <div className="grid gap-5 xl:grid-cols-[1.1fr_0.9fr] animate-fade-in-up [animation-delay:300ms]">
         <AppCard>
           <div className="flex items-center justify-between gap-3">
             <div>
-              <h2 className="font-serif text-2xl font-semibold text-brand-ink">
+              <h2 className="text-xl font-semibold text-brand-ink">
                 Tarefas pendentes
               </h2>
-              <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.74]">
-                Visao resumida do que sera refletido no Kanban e nas listas operacionais.
+              <p className="mt-1 text-sm leading-6 text-brand-graphite">
+                Visao resumida das tarefas operacionais.
               </p>
             </div>
-            <span className="rounded-full border border-brand-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-graphite">
+            <span className="sf-chip">
               3 destaques
             </span>
           </div>
 
-          <div className="mt-6 space-y-4">
+          <div className="mt-5 space-y-3">
             {tasks.map((task) => (
               <div
                 key={task.id}
-                className="rounded-[24px] border border-brand-border bg-white/80 p-5"
+                className="rounded-xl border border-brand-border bg-brand-mist/40 px-4 py-3 transition-colors hover:bg-brand-mist/60"
               >
-                <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
                   <div>
-                    <p className="text-lg font-semibold text-brand-ink">
+                    <p className="text-base font-medium text-brand-ink">
                       {task.titulo}
                     </p>
-                    <p className="mt-2 text-sm text-brand-graphite/[0.76]">
+                    <p className="mt-1 text-sm text-brand-graphite">
                       Projeto: {task.projetoNome || `Projeto #${task.projetoId}`}
                     </p>
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5">
                     <StatusBadge value={task.prioridade} />
                     <StatusBadge value={task.status} />
                   </div>
                 </div>
               </div>
             ))}
+
             {!loading && tasks.length === 0 ? (
               <EmptyState
                 title="Sem tarefas em aberto"
-                description="As tarefas operacionais em aberto aparecerao aqui para orientar a rotina do studio."
+                description="As tarefas operacionais em aberto aparecerao aqui."
                 actionLabel="Fluxo em dia"
               />
             ) : null}
           </div>
         </AppCard>
 
-        <AppCard className="bg-[linear-gradient(180deg,rgba(255,241,244,0.96),rgba(255,249,247,0.96))]">
-          <h2 className="font-serif text-2xl font-semibold text-brand-ink">
-            Lembretes internos
-          </h2>
-          <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.74]">
-            Notificacoes nao visualizadas para acompanhar o que pede atencao no sistema.
-          </p>
+        <AppCard className="relative overflow-hidden">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-rose/[0.03] to-brand-amber/[0.03]" />
+          <div className="relative z-10">
+            <h2 className="text-xl font-semibold text-brand-ink">
+              Lembretes internos
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-brand-graphite">
+              Notificacoes nao visualizadas do sistema.
+            </p>
 
-          <div className="mt-6 space-y-3">
-            {notifications.map((notification) => (
-              <div
-                key={notification.id}
-                className="rounded-[22px] border border-brand-border bg-white/82 p-4"
-              >
-                <div className="flex flex-wrap items-center gap-2">
-                  <p className="text-sm font-semibold text-brand-ink">
-                    {notification.titulo}
+            <div className="mt-5 space-y-3">
+              {notifications.map((notification) => (
+                <div
+                  key={notification.id}
+                  className="rounded-xl border border-brand-border bg-white/[0.03] p-3"
+                >
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="text-sm font-medium text-brand-ink">
+                      {notification.titulo}
+                    </p>
+                    <StatusBadge value={notification.tipo} />
+                  </div>
+                  <p className="mt-1.5 text-sm leading-6 text-brand-graphite/80">
+                    {notification.mensagem}
                   </p>
-                  <StatusBadge value={notification.tipo} />
                 </div>
-                <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.78]">
-                  {notification.mensagem}
-                </p>
-              </div>
-            ))}
-            {!loading && notifications.length === 0 ? (
-              <EmptyState
-                title="Sem lembretes pendentes"
-                description="As notificacoes internas nao visualizadas serao exibidas aqui quando existirem."
-                actionLabel="Caixa limpa"
-              />
-            ) : null}
+              ))}
+
+              {!loading && notifications.length === 0 ? (
+                <EmptyState
+                  title="Sem lembretes pendentes"
+                  description="As notificacoes internas nao visualizadas serao exibidas aqui."
+                  actionLabel="Caixa limpa"
+                />
+              ) : null}
+            </div>
           </div>
         </AppCard>
       </div>

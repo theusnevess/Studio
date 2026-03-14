@@ -155,25 +155,25 @@ export function ClientesPage() {
         <FeedbackBanner tone={feedback.tone} message={feedback.message} />
       ) : null}
 
-      <div className="grid gap-6 xl:grid-cols-[1.45fr_0.95fr]">
-        <AppCard className="space-y-6">
+      <div className="grid gap-5 xl:grid-cols-[1.45fr_0.95fr]">
+        <AppCard className="space-y-5">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h3 className="font-serif text-2xl font-semibold text-brand-ink">
+              <h3 className="text-xl font-semibold text-brand-ink">
                 Lista de clientes
               </h3>
-              <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.78]">
-                Consulte o cadastro ativo do studio e mantenha a base organizada.
+              <p className="mt-1 text-sm leading-6 text-brand-graphite">
+                Consulte o cadastro ativo do studio.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <select
                 value={filter}
                 onChange={(event) =>
                   setFilter(event.target.value as ClienteFilter)
                 }
-                className="rounded-[18px] border border-brand-border bg-brand-cream px-4 py-3 text-sm text-brand-graphite outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-select"
               >
                 <option value="ativos">Somente ativos</option>
                 <option value="todos">Todos</option>
@@ -183,7 +183,7 @@ export function ClientesPage() {
               <button
                 type="button"
                 onClick={startCreate}
-                className="rounded-[20px] bg-gradient-to-r from-brand-rose to-brand-berry px-5 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-white shadow-soft transition hover:opacity-95"
+                className="sf-button-primary whitespace-nowrap"
               >
                 Nova cliente
               </button>
@@ -204,50 +204,50 @@ export function ClientesPage() {
           {!loading && !error && clientes.length === 0 ? (
             <EmptyState
               title="Nenhuma cliente encontrada"
-              description="Ainda nao ha clientes para o filtro selecionado. Crie o primeiro cadastro para iniciar a base do studio."
+              description="Ainda nao ha clientes para o filtro selecionado."
               actionLabel="Cadastre a primeira"
             />
           ) : null}
 
           {!loading && !error && clientes.length > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {clientes.map((cliente) => (
                 <article
                   key={cliente.id}
-                  className="rounded-[26px] border border-brand-border bg-white/85 p-5"
+                  className="rounded-xl border border-brand-border bg-brand-mist/40 p-4"
                 >
-                  <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                  <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                     <div>
-                      <div className="flex flex-wrap items-center gap-3">
-                        <h4 className="text-lg font-semibold text-brand-ink">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h4 className="text-base font-medium text-brand-ink">
                           {cliente.nome}
                         </h4>
                         <StatusBadge value={cliente.ativo ? 'ATIVO' : 'INATIVO'} />
                       </div>
 
-                      <div className="mt-3 space-y-2 text-sm leading-6 text-brand-graphite/[0.8]">
+                      <div className="mt-2 space-y-1 text-sm leading-6 text-brand-graphite">
                         <p>
-                          <strong>Telefone:</strong>{' '}
+                          <strong className="text-brand-ink/60">Telefone:</strong>{' '}
                           {cliente.telefone || 'Nao informado'}
                         </p>
                         <p>
-                          <strong>Observacoes:</strong>{' '}
-                          {cliente.observacoes || 'Sem observacoes cadastradas.'}
+                          <strong className="text-brand-ink/60">Observacoes:</strong>{' '}
+                          {cliente.observacoes || 'Sem observacoes.'}
                         </p>
                         {cliente.updatedAt ? (
                           <p>
-                            <strong>Atualizada em:</strong>{' '}
+                            <strong className="text-brand-ink/60">Atualizada em:</strong>{' '}
                             {formatDate(cliente.updatedAt)}
                           </p>
                         ) : null}
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-2">
                       <button
                         type="button"
                         onClick={() => startEdit(cliente)}
-                        className="rounded-full border border-brand-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-graphite transition hover:border-brand-rose/40 hover:bg-brand-mist"
+                        className="sf-button-secondary"
                       >
                         Editar
                       </button>
@@ -255,7 +255,7 @@ export function ClientesPage() {
                         type="button"
                         disabled={!cliente.ativo}
                         onClick={() => void handleInativar(cliente)}
-                        className="rounded-full border border-rose-200 bg-rose-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-rose-700 transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="rounded-xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-xs font-medium text-rose-400 transition hover:bg-rose-500/20 disabled:cursor-not-allowed disabled:opacity-40"
                       >
                         Inativar
                       </button>
@@ -267,30 +267,30 @@ export function ClientesPage() {
           ) : null}
         </AppCard>
 
-        <AppCard className="h-fit space-y-6 xl:sticky xl:top-8">
+        <AppCard className="h-fit space-y-5 xl:sticky xl:top-8">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <h3 className="font-serif text-2xl font-semibold text-brand-ink">
+              <h3 className="text-xl font-semibold text-brand-ink">
                 {editingCliente ? 'Editar cliente' : 'Nova cliente'}
               </h3>
-              <p className="mt-2 text-sm leading-6 text-brand-graphite/[0.78]">
-                Preencha os dados essenciais para manter a base do studio consistente.
+              <p className="mt-1 text-sm leading-6 text-brand-graphite">
+                Preencha os dados para manter a base consistente.
               </p>
             </div>
             {editingCliente ? (
               <button
                 type="button"
                 onClick={resetForm}
-                className="rounded-full border border-brand-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-graphite transition hover:bg-brand-mist"
+                className="sf-button-secondary"
               >
                 Cancelar
               </button>
             ) : null}
           </div>
 
-          <form className="space-y-5" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">
                 Nome
               </span>
               <input
@@ -303,12 +303,12 @@ export function ClientesPage() {
                   }))
                 }
                 placeholder="Nome da cliente"
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-ink outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-input"
               />
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">
                 Telefone
               </span>
               <input
@@ -320,12 +320,12 @@ export function ClientesPage() {
                   }))
                 }
                 placeholder="(11) 99999-9999"
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-ink outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                className="sf-input"
               />
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-brand-graphite">
+              <span className="mb-1.5 block text-sm font-medium text-brand-graphite">
                 Observacoes
               </span>
               <textarea
@@ -337,15 +337,15 @@ export function ClientesPage() {
                     observacoes: event.target.value,
                   }))
                 }
-                placeholder="Anote preferencias, observacoes ou detalhes relevantes."
-                className="w-full rounded-[20px] border border-brand-border bg-brand-cream px-4 py-3 text-brand-ink outline-none transition focus:border-brand-rose focus:ring-4 focus:ring-brand-rose/10"
+                placeholder="Anote preferencias ou detalhes relevantes."
+                className="sf-textarea"
               />
             </label>
 
             <button
               type="submit"
               disabled={submitting}
-              className="w-full rounded-[22px] bg-gradient-to-r from-brand-rose to-brand-berry px-5 py-3.5 text-sm font-semibold uppercase tracking-[0.18em] text-white shadow-soft transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+              className="sf-button-primary w-full"
             >
               {submitting
                 ? 'Salvando...'

@@ -3,20 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --color-brand-rose: #ea4c89;
-  --color-brand-berry: #c62f6f;
-  --color-brand-ink: #20151c;
-  --color-brand-graphite: #43313d;
-  --color-brand-cream: #fff9f7;
-  --color-brand-mist: #fff1f4;
-  --color-brand-amber: #f2a65a;
-  --color-brand-border: #f0dce3;
-  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  --color-brand-rose: #e24b84;
+  --color-brand-amber: #ed9f47;
+  --color-brand-ink: #e8e4ec;
+  --color-brand-panel: #1a1720;
+  --color-brand-paper: #0f0d13;
+
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color: var(--color-brand-ink);
-  background:
-    radial-gradient(circle at top left, rgba(234, 76, 137, 0.18), transparent 24%),
-    radial-gradient(circle at top right, rgba(242, 166, 90, 0.16), transparent 22%),
-    linear-gradient(180deg, #fffdfc 0%, #fff5f6 48%, #fffaf7 100%);
+  background: var(--color-brand-paper);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -27,7 +22,6 @@
   box-sizing: border-box;
 }
 
-/* Garantimos que a aplicacao possa ocupar toda a altura da janela. */
 html,
 body,
 #root {
@@ -36,6 +30,12 @@ body,
 
 body {
   margin: 0;
+  color: var(--color-brand-ink);
+  background:
+    radial-gradient(ellipse at 18% 12%, rgba(226, 75, 132, 0.06), transparent 40%),
+    radial-gradient(ellipse at 82% 88%, rgba(237, 159, 71, 0.04), transparent 40%),
+    var(--color-brand-paper);
+  background-attachment: fixed;
 }
 
 a {
@@ -51,6 +51,59 @@ select {
 }
 
 ::selection {
-  background: rgba(234, 76, 137, 0.18);
-  color: var(--color-brand-ink);
+  background: rgba(226, 75, 132, 0.3);
+  color: #fff;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .sf-input {
+    @apply w-full rounded-xl border border-brand-border bg-brand-mist px-4 py-3 text-brand-ink placeholder:text-brand-graphite/50 outline-none transition focus:border-brand-rose/40 focus:ring-2 focus:ring-brand-rose/10;
+  }
+
+  .sf-select {
+    @apply w-full rounded-xl border border-brand-border bg-brand-mist px-4 py-3 text-brand-graphite outline-none transition focus:border-brand-rose/40 focus:ring-2 focus:ring-brand-rose/10;
+  }
+
+  .sf-textarea {
+    @apply w-full rounded-xl border border-brand-border bg-brand-mist px-4 py-3 text-brand-ink placeholder:text-brand-graphite/50 outline-none transition focus:border-brand-rose/40 focus:ring-2 focus:ring-brand-rose/10;
+  }
+
+  .sf-button-primary {
+    @apply rounded-xl bg-gradient-to-r from-brand-rose to-brand-amber px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:-translate-y-0.5 hover:shadow-glow active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .sf-button-secondary {
+    @apply rounded-xl border border-brand-border bg-brand-mist px-4 py-3 text-xs font-medium text-brand-graphite transition hover:border-brand-rose/30 hover:bg-brand-surface-raise;
+  }
+
+  .sf-chip {
+    @apply inline-flex items-center gap-1.5 rounded-lg border border-brand-border bg-brand-mist px-3 py-1.5 text-xs font-medium text-brand-graphite;
+  }
 }

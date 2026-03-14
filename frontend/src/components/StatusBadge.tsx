@@ -3,24 +3,24 @@ type StatusBadgeProps = {
 }
 
 const badgeMap: Record<string, string> = {
-  AGENDADO: 'border-brand-border bg-white text-brand-graphite',
-  CONFIRMADO: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-  CONCLUIDO: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-  CANCELADO: 'border-rose-200 bg-rose-50 text-rose-700',
-  ATIVO: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-  INATIVO: 'border-stone-200 bg-stone-100 text-stone-600',
-  VISUALIZADA: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-  NAO_VISUALIZADA: 'border-brand-border bg-white text-brand-graphite',
-  A_FAZER: 'border-brand-border bg-white text-brand-graphite',
-  EM_ANDAMENTO: 'border-amber-200 bg-amber-50 text-amber-700',
-  ALTA: 'border-rose-200 bg-rose-50 text-rose-700',
-  MEDIA: 'border-amber-200 bg-amber-50 text-amber-700',
-  BAIXA: 'border-sky-200 bg-sky-50 text-sky-700',
-  PLANEJADO: 'border-brand-border bg-white text-brand-graphite',
-  ARQUIVADO: 'border-stone-200 bg-stone-100 text-stone-600',
-  LEMBRETE_AGENDAMENTO: 'border-amber-200 bg-amber-50 text-amber-700',
-  AVISO_TAREFA: 'border-brand-border bg-brand-mist text-brand-berry',
-  INFORMACAO_GERAL: 'border-sky-200 bg-sky-50 text-sky-700',
+  AGENDADO: 'border-brand-graphite/20 bg-brand-graphite/10 text-brand-graphite',
+  CONFIRMADO: 'border-emerald-500/20 bg-emerald-500/10 text-emerald-400',
+  CONCLUIDO: 'border-emerald-500/20 bg-emerald-500/10 text-emerald-400',
+  CANCELADO: 'border-rose-500/20 bg-rose-500/10 text-rose-400',
+  ATIVO: 'border-emerald-500/20 bg-emerald-500/10 text-emerald-400',
+  INATIVO: 'border-zinc-500/20 bg-zinc-500/10 text-zinc-400',
+  VISUALIZADA: 'border-emerald-500/20 bg-emerald-500/10 text-emerald-400',
+  NAO_VISUALIZADA: 'border-amber-500/20 bg-amber-500/10 text-amber-400',
+  A_FAZER: 'border-brand-graphite/20 bg-brand-graphite/10 text-brand-graphite',
+  EM_ANDAMENTO: 'border-amber-500/20 bg-amber-500/10 text-amber-400',
+  ALTA: 'border-rose-500/20 bg-rose-500/10 text-rose-400',
+  MEDIA: 'border-amber-500/20 bg-amber-500/10 text-amber-400',
+  BAIXA: 'border-sky-500/20 bg-sky-500/10 text-sky-400',
+  PLANEJADO: 'border-brand-graphite/20 bg-brand-graphite/10 text-brand-graphite',
+  ARQUIVADO: 'border-zinc-500/20 bg-zinc-500/10 text-zinc-400',
+  LEMBRETE_AGENDAMENTO: 'border-amber-500/20 bg-amber-500/10 text-amber-400',
+  AVISO_TAREFA: 'border-brand-rose/20 bg-brand-rose/10 text-brand-rose',
+  INFORMACAO_GERAL: 'border-sky-500/20 bg-sky-500/10 text-sky-400',
 }
 
 function humanizeStatus(value: string) {
@@ -37,10 +37,11 @@ export function StatusBadge({ value }: StatusBadgeProps) {
   return (
     <span
       className={[
-        'inline-flex rounded-full border px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.18em]',
-        badgeMap[value] ?? 'border-brand-border bg-brand-mist text-brand-berry',
+        'inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider',
+        badgeMap[value] ?? 'border-brand-graphite/20 bg-brand-graphite/10 text-brand-graphite',
       ].join(' ')}
     >
+      <span className="h-1.5 w-1.5 rounded-full bg-current opacity-70" />
       {humanizeStatus(value)}
     </span>
   )
