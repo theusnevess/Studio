@@ -1,6 +1,7 @@
 # Java / Maven
 backend/target/
 backend/.mvn/wrapper/maven-wrapper.jar
+backend/data/
 
 # Node / Vite
 frontend/node_modules/
