@@ -1,42 +1,236 @@
-<p align="center">
-  <img src="docs/screenshots/02-dashboard.png" alt="StudioFlow Dashboard" width="800" />
-</p>
+# StudioFlow
 
-<h1 align="center">💅 StudioFlow</h1>
+Sistema web para gestão operacional de um studio de unhas, desenvolvido como projeto de extensão universitária com foco em organização da rotina, acompanhamento de atendimentos, tarefas internas e lembretes.
 
 <p align="center">
-  <strong>Sistema web para gestão de atendimentos, tarefas e organização operacional de um studio de unhas</strong>
+  <img src="docs/screenshots/02-dashboard.png" alt="Dashboard do StudioFlow" width="860" />
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Java-21-ED8B00?style=flat-square&logo=openjdk&logoColor=white" />
-  <img src="https://img.shields.io/badge/Spring_Boot-3.5-6DB33F?style=flat-square&logo=spring-boot&logoColor=white" />
-  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black" />
-  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" />
-  <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql&logoColor=white" />
-</p>
+## Visão geral
 
----
+O StudioFlow nasceu a partir de uma necessidade real observada em um studio de unhas que utilizava agenda física e anotações manuais para apoiar o controle do dia a dia. O objetivo do sistema é centralizar informações operacionais em uma aplicação web simples, profissional e defensável academicamente.
 
-## 📋 Sobre o Projeto
+O projeto foi construído em monorepo, com backend em Spring Boot e frontend em React, permitindo evolução incremental dos módulos sem inflar o escopo.
 
-O **StudioFlow** é um sistema web desenvolvido como parte de um **projeto de extensão universitária** (Projeto Integrador III-B — PUC Goiás), em parceria com o **Studio Nathalya Soares**, um empreendimento real do segmento de beleza localizado em Goiânia–GO.
+## Problema resolvido
 
-O studio utilizava agenda física e anotações manuais para controlar atendimentos, tarefas e lembretes. O StudioFlow surgiu para **centralizar essas informações** em uma aplicação moderna, organizada e acessível via navegador.
+Antes do sistema, a operação do studio dependia fortemente de registros manuais. Isso dificultava:
 
-### 🎯 Objetivos
+- visualizar a rotina em um único lugar
+- acompanhar clientes e atendimentos
+- controlar tarefas operacionais
+- lembrar compromissos importantes
+- ter uma visão mais clara da agenda e das pendências
 
-- Permitir o cadastro e gerenciamento de clientes
-- Organizar atendimentos por data, horário, serviço e status
-- Cadastrar e acompanhar tarefas operacionais
-- Visualizar a agenda em formato de calendário mensal
-- Oferecer um quadro Kanban para gestão visual de tarefas
-- Disponibilizar notificações internas para lembretes e avisos
+O StudioFlow foi projetado para resolver esse cenário com uma base funcional enxuta, mas real.
 
----
+## Objetivo do projeto
 
-## 🖥️ Capturas de Tela
+Desenvolver uma plataforma web para apoiar a gestão de um studio de unhas por meio de:
+
+- cadastro de usuários
+- cadastro e manutenção de clientes
+- controle de projetos operacionais
+- gestão de tarefas
+- gestão de agendamentos
+- visualização em calendário
+- notificações internas
+- dashboard com visão resumida da operação
+
+## Estado atual
+
+O projeto já possui backend funcional, frontend integrado e dados sintéticos para demonstração local.
+
+### Módulos disponíveis
+
+- Dashboard
+- Usuários
+- Clientes
+- Projetos
+- Tarefas
+- Agendamentos
+- Calendário
+- Notificações
+
+### Observação sobre Kanban
+
+O Kanban foi removido da interface do sistema e o fluxo visual de tarefas pode ser conduzido externamente em ferramentas como Trello, conforme a decisão atual do projeto.
+
+## Stack utilizada
+
+### Backend
+
+- Java 21
+- Spring Boot 3
+- Maven
+- Spring Web
+- Spring Data JPA
+- Spring Security
+- Bean Validation
+- Flyway
+- Lombok
+- PostgreSQL
+- H2 para modo demo e testes
+
+### Frontend
+
+- React
+- Vite
+- TypeScript
+- Tailwind CSS
+- React Router
+
+### Testes
+
+- JUnit 5
+- Spring Boot Test
+- MockMvc
+- Mockito
+- H2 para integração local de testes
+
+## Estrutura do repositório
+
+```text
+Studio_extensao/
+├── backend/
+│   ├── src/main/java/com/studioflow/backend
+│   │   ├── config
+│   │   ├── controller
+│   │   ├── dto
+│   │   ├── entity
+│   │   ├── exception
+│   │   ├── repository
+│   │   ├── security
+│   │   └── service
+│   └── src/main/resources
+│       ├── db/migration
+│       ├── application.yml
+│       ├── application-dev.yml
+│       └── application-demo.yml
+├── frontend/
+│   ├── public
+│   └── src
+│       ├── components
+│       ├── hooks
+│       ├── layouts
+│       ├── pages
+│       ├── router
+│       ├── services
+│       ├── types
+│       └── utils
+└── docs/
+```
+
+## Arquitetura
+
+O projeto segue o modelo cliente-servidor:
+
+- o backend expõe a API REST, aplica regras de negócio, validações e persistência
+- o frontend consome a API, organiza a navegação e entrega a interface de uso
+- o banco relacional guarda os dados operacionais do studio
+
+### Responsabilidades do backend
+
+- CRUD dos módulos principais
+- validação de entrada
+- tratamento padronizado de erros
+- versionamento do banco com Flyway
+- seed de desenvolvimento e demonstração
+
+### Responsabilidades do frontend
+
+- interface visual do sistema
+- navegação por rotas
+- consumo centralizado da API
+- formulários e feedbacks visuais
+- dashboard e visualizações operacionais
+
+## Modelagem principal
+
+As entidades centrais do sistema são:
+
+- `Usuario`
+- `Cliente`
+- `Projeto`
+- `Tarefa`
+- `Agendamento`
+- `Notificacao`
+
+### Relações principais
+
+- um `Projeto` possui várias `Tarefas`
+- um `Projeto` pode agrupar vários `Agendamentos`
+- um `Cliente` pode possuir vários `Agendamentos`
+- um `Usuario` pode ser responsável por `Tarefas` e `Agendamentos`
+- um `Usuario` recebe `Notificacoes`
+- uma `Notificacao` pode estar vinculada a um `Agendamento`
+
+Para mais detalhes, consulte:
+
+- [docs/modelagem-dominio.md](docs/modelagem-dominio.md)
+- [docs/backend-api.md](docs/backend-api.md)
+
+## Funcionalidades implementadas
+
+### Dashboard
+
+- indicadores resumidos
+- próximos atendimentos
+- tarefas pendentes
+- notificações não visualizadas
+
+### Usuários
+
+- criação
+- listagem
+- edição
+- inativação lógica
+
+### Clientes
+
+- listagem
+- filtro por ativos e inativos
+- criação
+- edição
+- inativação lógica
+
+### Projetos
+
+- listagem
+- filtro por status
+- criação
+- edição
+- atualização de status
+
+### Tarefas
+
+- listagem
+- filtros por status e projeto
+- criação
+- edição
+- atualização rápida de status
+
+### Agendamentos
+
+- listagem
+- filtros por status, cliente e intervalo
+- criação
+- edição
+- atualização de status
+
+### Calendário
+
+- visão mensal
+- leitura dos agendamentos reais
+- painel lateral com detalhes do evento
+
+### Notificações
+
+- listagem
+- filtros por usuário e visualização
+- marcação como visualizada
+
+## Capturas de tela
 
 <table>
   <tr>
@@ -49,183 +243,51 @@ O studio utilizava agenda física e anotações manuais para controlar atendimen
   </tr>
   <tr>
     <td align="center"><strong>Tarefas</strong></td>
-    <td align="center"><strong>Quadro Kanban</strong></td>
+    <td align="center"><strong>Calendário</strong></td>
   </tr>
   <tr>
     <td><img src="docs/screenshots/03-tarefas.png" width="400" /></td>
-    <td><img src="docs/screenshots/04-kanban.png" width="400" /></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>Calendário</strong></td>
-    <td align="center"><strong>Notificações</strong></td>
-  </tr>
-  <tr>
     <td><img src="docs/screenshots/05-calendario.png" width="400" /></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>Notificações</strong></td>
+    <td align="center"><strong>Dados de demonstração</strong></td>
+  </tr>
+  <tr>
     <td><img src="docs/screenshots/06-notificacoes.png" width="400" /></td>
+    <td align="center">O backend possui seed local para facilitar a demonstração do sistema.</td>
   </tr>
 </table>
 
----
-
-## 🏗️ Arquitetura
-
-O projeto segue uma arquitetura **cliente-servidor** organizada em **monorepo**:
-
-```
-StudioFlow/
-├── backend/          # API REST — Java 21 + Spring Boot 3
-├── frontend/         # SPA — React + TypeScript + Tailwind CSS
-└── docs/             # Documentação do projeto
-    ├── visao-produto.md
-    ├── arquitetura-inicial.md
-    ├── modelagem-dominio.md
-    ├── backend-api.md
-    ├── padroes-de-desenvolvimento.md
-    └── screenshots/
-```
-
-### Backend
-
-| Camada | Responsabilidade |
-|---|---|
-| `controller/` | Endpoints REST, recebe e valida requisições |
-| `service/` | Regras de negócio e orquestração |
-| `repository/` | Acesso a dados via Spring Data JPA |
-| `entity/` | Entidades JPA mapeadas ao banco |
-| `dto/` | Objetos de transferência (entrada e saída) |
-| `config/` | CORS, segurança, seed de dados |
-| `exception/` | Tratamento global de erros |
-
-### Frontend
-
-| Diretório | Responsabilidade |
-|---|---|
-| `pages/` | Telas completas (Dashboard, Clientes, Kanban, etc.) |
-| `components/` | Componentes reutilizáveis (AppCard, StatusBadge, etc.) |
-| `services/` | Comunicação com a API REST |
-| `layouts/` | Layout principal com sidebar e header |
-| `types/` | Tipos TypeScript do domínio |
-| `hooks/` | Hooks personalizados |
-| `utils/` | Funções utilitárias (formatadores, tratamento de erros) |
-
----
-
-## 🗃️ Modelagem de Domínio
-
-O sistema é composto por **6 entidades principais**:
-
-```mermaid
-erDiagram
-    USUARIO ||--o{ TAREFA : responsavel
-    USUARIO ||--o{ AGENDAMENTO : responsavel
-    USUARIO ||--o{ NOTIFICACAO : destinatario
-    PROJETO ||--o{ TAREFA : contem
-    PROJETO ||--o{ AGENDAMENTO : associado
-    CLIENTE ||--o{ AGENDAMENTO : atendido
-
-    USUARIO {
-        Long id PK
-        String nome
-        String email
-        String senha
-        Boolean ativo
-    }
-
-    CLIENTE {
-        Long id PK
-        String nome
-        String telefone
-        String observacoes
-        Boolean ativo
-    }
-
-    PROJETO {
-        Long id PK
-        String nome
-        String descricao
-        StatusProjeto status
-    }
-
-    TAREFA {
-        Long id PK
-        String titulo
-        String descricao
-        StatusTarefa status
-        PrioridadeTarefa prioridade
-        LocalDateTime dataVencimento
-    }
-
-    AGENDAMENTO {
-        Long id PK
-        String titulo
-        String servico
-        String observacoes
-        LocalDateTime dataHoraInicio
-        LocalDateTime dataHoraFim
-        StatusAgendamento status
-    }
-
-    NOTIFICACAO {
-        Long id PK
-        String titulo
-        String mensagem
-        Boolean visualizada
-    }
-```
-
----
-
-## 🛠️ Tecnologias
-
-### Backend
-- **Java 21** — Linguagem principal
-- **Spring Boot 3.5** — Framework web e DI
-- **Spring Data JPA** — Persistência e ORM
-- **Spring Security** — Configuração de segurança
-- **Bean Validation** — Validação de entrada
-- **Flyway** — Migrações de banco de dados
-- **Lombok** — Redução de boilerplate
-- **PostgreSQL** — Banco de dados relacional (produção)
-- **H2** — Banco embarcado (modo demo e testes)
-
-### Frontend
-- **React 19** — Biblioteca de UI
-- **Vite** — Build tool e dev server
-- **TypeScript 5** — Tipagem estática
-- **Tailwind CSS** — Estilização utilitária
-- **React Router** — Navegação SPA
-
-### Testes
-- **JUnit 5** — Framework de testes
-- **MockMvc** — Testes de controllers
-- **Mockito** — Mocks para testes de services
-- **H2** — Banco in-memory para testes de integração
-
----
-
-## 🚀 Como Executar
+## Como executar
 
 ### Pré-requisitos
 
-- Java 21+
-- Node.js 18+
-- Maven 3.9+ (ou usar o wrapper `mvnw` incluído)
-- PostgreSQL 15+ *(opcional — o modo demo usa H2)*
+- Java 21 instalado
+- Maven instalado
+- Node.js instalado
+- npm instalado
+- PostgreSQL instalado, se desejar usar o perfil real de desenvolvimento
 
-### Modo Demo (sem PostgreSQL)
+## Execução rápida em modo demo
 
-O modo padrão do projeto usa o **perfil `demo`** com banco H2 embarcado e **dados de exemplo pré-carregados**.
+O modo demo é o mais indicado para demonstração local, porque utiliza H2 persistente com seed automático.
 
-**1. Backend**
+### 1. Subir o backend
 
 ```bash
 cd backend
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 
-O servidor inicia em `http://localhost:8080` com dados de demonstração já populados.
+Por padrão, o projeto sobe com o profile `demo`.
 
-**2. Frontend**
+Backend disponível em:
+
+- `http://localhost:8080`
+- healthcheck: `http://localhost:8080/api/health`
+
+### 2. Subir o frontend
 
 ```bash
 cd frontend
@@ -233,98 +295,228 @@ npm install
 npm run dev
 ```
 
-Acesse `http://localhost:5173` no navegador.
+Abra no navegador a URL informada pelo Vite. Normalmente:
 
-### Modo Desenvolvimento (com PostgreSQL)
+- `http://localhost:5173`
 
-**1. Crie o banco de dados**
+Se a porta estiver ocupada, o Vite sobe em outra, como `5174` ou `5175`.
+
+## Execução com PostgreSQL
+
+Se quiser rodar com banco PostgreSQL real:
+
+### 1. Criar o banco
 
 ```sql
 CREATE DATABASE studioflow;
 ```
 
-**2. Inicie o backend com perfil `dev`**
+### 2. Definir credenciais
+
+Variáveis aceitas:
+
+- `DB_HOST`
+- `DB_PORT`
+- `DB_NAME`
+- `DB_USERNAME`
+- `DB_PASSWORD`
+
+Exemplo no PowerShell:
+
+```powershell
+$env:DB_HOST="localhost"
+$env:DB_PORT="5432"
+$env:DB_NAME="studioflow"
+$env:DB_USERNAME="postgres"
+$env:DB_PASSWORD="sua_senha"
+```
+
+### 3. Iniciar o backend com profile dev
 
 ```bash
 cd backend
-./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
-Variáveis de ambiente aceitas:
+## Dados sintéticos
 
-| Variável | Padrão |
-|---|---|
-| `DB_HOST` | `localhost` |
-| `DB_PORT` | `5432` |
-| `DB_NAME` | `studioflow` |
-| `DB_USERNAME` | `postgres` |
-| `DB_PASSWORD` | `postgres` |
+O projeto inclui dados sintéticos para facilitar demonstração e validação local.
 
-**3. Inicie o frontend**
+### Seed em demo/dev
+
+Ao subir o backend em `demo` ou `dev`, o sistema pode popular automaticamente:
+
+- usuário base
+- projeto base
+- clientes sintéticos
+- tarefas sintéticas
+- agendamentos sintéticos
+
+### Migrations de seed
+
+Além do seed em runtime, existem migrations SQL com dados de clientes:
+
+- `V2__seed_sample_clientes.sql`
+- `V3__seed_more_sample_clientes.sql`
+
+## Endpoints principais da API
+
+### Saúde da aplicação
+
+- `GET /api/health`
+
+### Usuários
+
+- `POST /api/usuarios`
+- `GET /api/usuarios`
+- `GET /api/usuarios/{id}`
+- `PUT /api/usuarios/{id}`
+- `PATCH /api/usuarios/{id}/inativar`
+
+### Clientes
+
+- `POST /api/clientes`
+- `GET /api/clientes`
+- `GET /api/clientes/{id}`
+- `PUT /api/clientes/{id}`
+- `PATCH /api/clientes/{id}/inativar`
+
+### Projetos
+
+- `POST /api/projetos`
+- `GET /api/projetos`
+- `GET /api/projetos/{id}`
+- `PUT /api/projetos/{id}`
+- `PATCH /api/projetos/{id}/status`
+
+### Tarefas
+
+- `POST /api/tarefas`
+- `GET /api/tarefas`
+- `GET /api/tarefas/{id}`
+- `PUT /api/tarefas/{id}`
+- `PATCH /api/tarefas/{id}/status`
+
+Filtros:
+
+- `status`
+- `projetoId`
+
+### Agendamentos
+
+- `POST /api/agendamentos`
+- `GET /api/agendamentos`
+- `GET /api/agendamentos/{id}`
+- `PUT /api/agendamentos/{id}`
+- `PATCH /api/agendamentos/{id}/status`
+
+Filtros:
+
+- `status`
+- `clienteId`
+- `dataInicio`
+- `dataFim`
+
+### Notificações
+
+- `POST /api/notificacoes`
+- `GET /api/notificacoes`
+- `GET /api/notificacoes/{id}`
+- `PATCH /api/notificacoes/{id}/visualizar`
+
+Filtros:
+
+- `usuarioId`
+- `visualizada`
+
+Documentação resumida da API:
+
+- [docs/backend-api.md](docs/backend-api.md)
+
+## Testes
+
+### Backend
+
+Rodar testes automatizados:
+
+```bash
+cd backend
+mvn test
+```
+
+Gerar pacote sem testes:
+
+```bash
+cd backend
+mvn -DskipTests package
+```
+
+### Frontend
+
+Build de produção:
 
 ```bash
 cd frontend
-npm install
-npm run dev
+npm run build
 ```
 
-### Executar Testes
+Lint:
 
 ```bash
-cd backend
-./mvnw test
+cd frontend
+npm run lint
 ```
 
----
+## Padrões adotados
 
-## 📂 Funcionalidades
+### Branches
 
-| Módulo | Descrição |
-|---|---|
-| **Dashboard** | Painel com visão geral: atendimentos próximos, tarefas abertas, indicadores e atalhos |
-| **Clientes** | CRUD completo com inativação (soft delete) e campo de observações |
-| **Projetos** | Gestão de frentes operacionais com status (Planejado, Em andamento, Concluído) |
-| **Tarefas** | CRUD com filtros por status/projeto, prioridade, responsável e atualização rápida de status |
-| **Kanban** | Quadro visual com 3 colunas (A fazer, Em andamento, Concluído), drag-and-drop e barra de progresso |
-| **Agendamentos** | Controle de atendimentos com data, horário, serviço, cliente, status e observações |
-| **Calendário** | Visualização mensal da agenda com painel lateral de detalhes do atendimento |
-| **Notificações** | Lembretes internos com filtros e marcação como lida |
+- `main`
+- `develop`
+- `feature/<nome>`
+- `fix/<nome>`
+- `docs/<nome>`
 
----
+### Commits
 
-## 📚 Documentação
+- `feat:`
+- `fix:`
+- `docs:`
+- `refactor:`
+- `test:`
+- `chore:`
 
-| Documento | Descrição |
-|---|---|
-| [`visao-produto.md`](docs/visao-produto.md) | Escopo do produto, problema e objetivos |
-| [`arquitetura-inicial.md`](docs/arquitetura-inicial.md) | Decisões arquiteturais e divisão de responsabilidades |
-| [`modelagem-dominio.md`](docs/modelagem-dominio.md) | Entidades, atributos, enums e relacionamentos |
-| [`backend-api.md`](docs/backend-api.md) | Endpoints da API REST |
-| [`padroes-de-desenvolvimento.md`](docs/padroes-de-desenvolvimento.md) | Convenções do projeto |
+## Documentação complementar
 
----
+- [docs/visao-produto.md](docs/visao-produto.md)
+- [docs/arquitetura-inicial.md](docs/arquitetura-inicial.md)
+- [docs/modelagem-dominio.md](docs/modelagem-dominio.md)
+- [docs/backend-api.md](docs/backend-api.md)
+- [docs/padroes-de-desenvolvimento.md](docs/padroes-de-desenvolvimento.md)
 
-## 🔮 Melhorias Futuras
+## Limitações atuais
 
-- [ ] Autenticação real com JWT
-- [ ] Criptografia de senhas (BCrypt)
-- [ ] Notificações automáticas no navegador (push)
-- [ ] Relatórios operacionais
-- [ ] Filtros avançados e busca textual
-- [ ] Deploy em nuvem (Railway / Render)
-- [ ] Integração com WhatsApp para lembretes
+Itens ainda não implementados:
 
----
+- autenticação real com JWT
+- login funcional completo
+- criptografia de senha
+- notificações automáticas no navegador
+- integrações externas
+- app mobile nativo
 
-## 👤 Autor
+## Melhorias futuras
 
-**Matheus Neves**
-Análise e Desenvolvimento de Sistemas — PUC Goiás
+- autenticação e autorização reais
+- refinamento de dashboard
+- relatórios operacionais simples
+- filtros mais avançados
+- melhorias extras de UX
+- deploy em nuvem
 
-Projeto Integrador III-B — Extensão Universitária (2026)
+## Autor
 
----
+**Matheus Neves**  
+Projeto de extensão universitária  
+Curso de Análise e Desenvolvimento de Sistemas
 
-<p align="center">
-  <sub>Feito com ☕ e 💅 para o Studio Nathalya Soares</sub>
-</p>
