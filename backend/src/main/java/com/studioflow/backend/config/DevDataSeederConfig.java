@@ -15,7 +15,10 @@ import com.studioflow.backend.repository.ProjetoRepository;
 import com.studioflow.backend.repository.TarefaRepository;
 import com.studioflow.backend.repository.UsuarioRepository;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -75,42 +78,87 @@ public class DevDataSeederConfig {
     }
 
     private List<Cliente> ensureClientes(ClienteRepository clienteRepository) {
-        if (clienteRepository.count() == 0) {
-            clienteRepository.saveAll(List.of(
-                    buildCliente(
-                            "Ana Luiza Martins",
-                            "(11) 99871-2045",
-                            "Prefere atendimento no periodo da tarde e tons nude."
-                    ),
-                    buildCliente(
-                            "Beatriz Fernandes",
-                            "(11) 99752-1184",
-                            "Costuma agendar manutencao a cada 20 dias."
-                    ),
-                    buildCliente(
-                            "Camila Araujo",
-                            "(11) 99134-5520",
-                            "Gosta de alongamento em gel e decoracoes delicadas."
-                    ),
-                    buildCliente(
-                            "Daniela Souza",
-                            "(11) 99403-7611",
-                            "Atendimento geralmente aos sabados pela manha."
-                    ),
-                    buildCliente(
-                            "Fernanda Lima",
-                            "(11) 99661-3329",
-                            "Cliente recorrente; prefere esmaltes rosados."
-                    ),
-                    buildCliente(
-                            "Juliana Costa",
-                            "(11) 99912-8470",
-                            "Tem sensibilidade a produtos com cheiro muito forte."
-                    )
-            ));
+        List<Cliente> clientesExistentes = clienteRepository.findAllByOrderByNomeAsc();
+        Set<String> nomesExistentes = new HashSet<>();
+        clientesExistentes.forEach(cliente -> nomesExistentes.add(cliente.getNome()));
+
+        List<Cliente> clientesParaInserir = new ArrayList<>();
+        for (Cliente cliente : buildSampleClientes()) {
+            if (!nomesExistentes.contains(cliente.getNome())) {
+                clientesParaInserir.add(cliente);
+            }
+        }
+
+        if (!clientesParaInserir.isEmpty()) {
+            clienteRepository.saveAll(clientesParaInserir);
         }
 
         return clienteRepository.findAllByAtivoOrderByNomeAsc(true);
+    }
+
+    private List<Cliente> buildSampleClientes() {
+        return List.of(
+                buildCliente(
+                        "Ana Luiza Martins",
+                        "(11) 99871-2045",
+                        "Prefere atendimento no periodo da tarde e tons nude."
+                ),
+                buildCliente(
+                        "Beatriz Fernandes",
+                        "(11) 99752-1184",
+                        "Costuma agendar manutencao a cada 20 dias."
+                ),
+                buildCliente(
+                        "Camila Araujo",
+                        "(11) 99134-5520",
+                        "Gosta de alongamento em gel e decoracoes delicadas."
+                ),
+                buildCliente(
+                        "Daniela Souza",
+                        "(11) 99403-7611",
+                        "Atendimento geralmente aos sabados pela manha."
+                ),
+                buildCliente(
+                        "Fernanda Lima",
+                        "(11) 99661-3329",
+                        "Cliente recorrente; prefere esmaltes rosados."
+                ),
+                buildCliente(
+                        "Juliana Costa",
+                        "(11) 99912-8470",
+                        "Tem sensibilidade a produtos com cheiro muito forte."
+                ),
+                buildCliente(
+                        "Larissa Mendes",
+                        "(11) 99803-4472",
+                        "Prefere nail art delicada e atendimento no fim da tarde."
+                ),
+                buildCliente(
+                        "Mariana Ribeiro",
+                        "(11) 99784-2251",
+                        "Costuma agendar banho de gel e manutencao no inicio do mes."
+                ),
+                buildCliente(
+                        "Patricia Oliveira",
+                        "(11) 99628-7135",
+                        "Solicita confirmacao no dia anterior ao atendimento."
+                ),
+                buildCliente(
+                        "Renata Alves",
+                        "(11) 99547-1682",
+                        "Gosta de tons quentes e acabamento mais brilhoso."
+                ),
+                buildCliente(
+                        "Sabrina Rocha",
+                        "(11) 99415-8204",
+                        "Prefere horarios apos as 18h e decoracoes minimalistas."
+                ),
+                buildCliente(
+                        "Tatiane Moreira",
+                        "(11) 99376-5541",
+                        "Cliente recorrente, costuma agendar junto com a filha."
+                )
+        );
     }
 
     private void ensureTarefas(
